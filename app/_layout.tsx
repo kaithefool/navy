@@ -7,24 +7,24 @@ import config from "../tamagui.config";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [interLoaded, interError] = useFonts({
+  const [loaded, err] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
 
   useEffect(() => {
-    if (interLoaded || interError) {
+    if (loaded || err) {
       // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
       SplashScreen.hideAsync();
     }
-  }, [interLoaded, interError]);
+  }, [loaded, err]);
 
-  if (!interLoaded && !interError) {
+  if (!loaded && !err) {
     return null;
   }
 
   return (
-    <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
+    <TamaguiProvider config={config} defaultTheme={colorScheme || undefined}>
       <Slot />
     </TamaguiProvider>
   );
