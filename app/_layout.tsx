@@ -1,16 +1,21 @@
-import { Slot, SplashScreen } from "expo-router";
-import { TamaguiProvider } from "@tamagui/core";
+import React, { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
+import { Slot, SplashScreen } from "expo-router";
+import { TamaguiProvider } from "@tamagui/core";
+
+// fonts
+import Inter from '@tamagui/font-inter/otf/Inter-Medium.otf';
+import InterBold from '@tamagui/font-inter/otf/Inter-Bold.otf';
+
 import config from "../tamagui.config";
 
+// Prevents SplashScreen from auto hiding while the fonts are loaded.
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded, err] = useFonts({
-    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
-    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
-  });
+  const colorScheme = useColorScheme(),
+    [loaded, err] = useFonts({ Inter, InterBold });
 
   useEffect(() => {
     if (loaded || err) {
