@@ -3,8 +3,7 @@ import pluginReact from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
 
 export default [
-  {
-    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+  { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     rules: {
       indent: ['error', 2],
       semi: ['error', 'always'],
@@ -18,8 +17,7 @@ export default [
       'object-curly-newline': ['error', { multiline: true }],
       'key-spacing': ['error', { beforeColon: false, afterColon: true }],
       'array-bracket-spacing': ['error', 'never'],
-    },
-  },
+    } },
   pluginJs.configs.recommended,
   pluginReact.configs.flat.recommended,
   ...tseslint.configs.recommended,

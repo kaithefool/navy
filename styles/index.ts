@@ -1,1 +1,3 @@
-export * as palette from './palette';
+import text from './text';
+
+export * from './theme';

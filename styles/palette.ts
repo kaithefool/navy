@@ -1,53 +1,34 @@
-import type { Theme } from '@react-navigation/native';
 import chroma from 'chroma-js';
 
-const invert = (color: string): string => {
+export type Palette = {
+  [key: string]: string;
+}
+
+export const invert = (color: string): string => {
   const c = chroma(color);
 
   return c.set('hsl.l', 1 - c.luminance()).hex();
 };
 
-const palette = {
-  primary: '#0d6efd',
-  secondary: '#6610f2',
-  neutral: '#6c757d',
+export const variants = (name: string, color: string, {
+  base = 400,
+  lightest = 100,
+  darkest = 600,
+  step = .2,
+  tint = '#ffffff',
+  shade  = '#000000',
+} = {}): Palette => {
+  const c = chroma(color);
+  const output: Palette = { [name]: color };
 
-  success: '#198754',
-  info: '#0dcaf0',
-  warning: '#ffc107',
-  danger: '#dc3545',
+  for (let i = lightest; i < darkest; i += 100) {
+    let s = c;
 
-  light: '#f8f9fa',
-  dark: '#212529',
+    if (i < base) s = c.mix(tint, (base - i) * step / 100);
+    if (i > base) s = c.mix(shade, (i - base) * step / 100);
 
-  background: '#ffffff',
-  text: '#212529',
-  border: '#dee2e6',
-} as const;
+    output[`${name}-${i}`] = s.hex();
+  }
 
-export const theme = {
-  light: { ...palette },
-  dark: {
-    ...palette,
-    light: invert(palette.light),
-    dark: invert(palette.dark),
-
-    background: invert(palette.background),
-    text: invert(palette.text),
-    border: invert(palette.border),
-  },
-} as const;
-
-export const getNavTheme = (name: 'light' | 'dark'): Theme => {
-  return {
-    dark: name === 'dark',
-    colors: {
-      primary: theme[name].primary,
-      background: theme[name].background,
-      card: theme[name].light,
-      text: theme[name].text,
-      border: theme[name].border,
-      notification: theme[name].danger,
-    },
-  };
+  return output;
 };

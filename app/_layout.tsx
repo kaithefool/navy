@@ -7,7 +7,8 @@ import {
   useFonts,
   NotoSans_400Regular as notoSans400,
 } from '@expo-google-fonts/noto-sans';
-import { getNavTheme } from '../styles/palette';
+
+import { getNavTheme } from '../styles';
 
 // Prevents SplashScreen from auto hiding while the fonts are loaded.
 SplashScreen.preventAutoHideAsync();
