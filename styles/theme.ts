@@ -9,7 +9,7 @@ const invert = (color: string): string => {
 
 export const palette = {
   primary: '#0d6efd',
-  secondary: '#6610f2',
+  secondary: '#1f1e22',
   neutral: '#6c757d',
 
   success: '#198754',

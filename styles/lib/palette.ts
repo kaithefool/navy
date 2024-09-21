@@ -149,6 +149,7 @@ type InvertOpts = {
     [color: string]: boolean;
   };
   grays?: boolean;
+  body?: boolean;
 };
 
 /**
@@ -157,16 +158,32 @@ type InvertOpts = {
 export const palette = ({
   themes = false,
   grays = false,
+  body = '#ffffff',
   invert = false,
 }: {
   /**
-   * Theme color options
+   * Theme colors with options to produce color variants.
+   * @example
+   * palette({
+   *   themes: {
+   *     primary: '#0d6efd',
+   *     secondary: { color: '#6610f2', step: .3 },
+   *   }
+   * })
    */
   themes?: { [key: string]: string | VariantsOpts } | false,
   /**
    * Grayscale options
    */
   grays?: GrayscaleOpts | boolean,
+  /**
+   * Background color of the app
+   */
+  body?: string,
+  /**
+   * Invert options. Set true to invert all colors.
+   * @default false
+   */
   invert?: InvertOpts | boolean,
 }): Palette => {
   const output: Palette = {};
@@ -175,7 +192,7 @@ export const palette = ({
   const themesOpts = themes === false ? {} : themes;
   const graysOpts = grays === true ? {} : grays;
   const invertOpts = typeof invert === 'boolean'
-    ? { themes: invert, grays: invert } : invert;
+    ? { themes: invert, grays: invert, body: invert } : invert;
 
   // theme colors
   if (themesOpts) {
@@ -208,6 +225,11 @@ export const palette = ({
     if (invertOpts.grays) gs = invertPaletteLt(gs);
 
     Object.assign(output, gs);
+  }
+
+  // body background
+  if (body) {
+    output.body = invertOpts.body ? invertLt(body) : body;
   }
 
   return output;
