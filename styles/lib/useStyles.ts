@@ -1,3 +1,4 @@
+
 export const st = (styles, ...styleNames: string[]) => {
   const names = styleNames
     .flatMap((ns) => ns.split(' '))
@@ -7,6 +8,6 @@ export const st = (styles, ...styleNames: string[]) => {
   return Object.assign({}, ...names.map((n) => styles[n] || {}));
 };
 
-export default function getStyles() {
+export default function useStyles() {
 
 }

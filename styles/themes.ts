@@ -1,4 +1,4 @@
-import makePalette, { Palette } from './lib/palette';
+import makePalette from './lib/palette';
 
 export const colors = {
   primary: '#0d6efd',

@@ -18,6 +18,7 @@ export default [
       'object-curly-newline': ['error', { multiline: true }],
       'key-spacing': ['error', { beforeColon: false, afterColon: true }],
       'array-bracket-spacing': ['error', 'never'],
+      'arrow-parens': ['error', 'always'],
     },
   },
   pluginJs.configs.recommended,

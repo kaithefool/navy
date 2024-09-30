@@ -155,7 +155,7 @@ type InvertOpts = {
 /**
  * A function to generate color palette
  */
-export const palette = ({
+export default function makePalette({
   themes = false,
   grays = false,
   body = '#ffffff',
@@ -185,7 +185,7 @@ export const palette = ({
    * @default false
    */
   invert?: InvertOpts | boolean,
-}): Palette => {
+}): Palette {
   const output: Palette = {};
 
   // options defaults
@@ -234,5 +234,3 @@ export const palette = ({
 
   return output;
 };
-
-export default palette;

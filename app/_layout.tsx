@@ -5,7 +5,8 @@ import { Slot, SplashScreen } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   useFonts,
-  NotoSans_400Regular as notoSans400,
+  NotoSans_400Regular,
+  NotoSans_600SemiBold,
 } from '@expo-google-fonts/noto-sans';
 
 import { getNavTheme } from '../styles';
@@ -15,7 +16,10 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme() ?? 'light',
-    [loaded, err] = useFonts({ notoSans400 });
+    [loaded, err] = useFonts({
+      NotoSans_400Regular,
+      NotoSans_600SemiBold,
+    });
 
   useEffect(() => {
     if (loaded || err) {
