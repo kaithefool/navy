@@ -18,9 +18,11 @@ export const invertLt = (color: string): string => {
  * A function to invert all colors within the palette object
  */
 export const invertPaletteLt = (p: Palette) => (
-  Object.fromEntries(Object.entries(p).map(([k, v]) => (
-    [k, invertLt(v)]
-  )))
+  Object.fromEntries(
+    Object.entries(p).map(([k, v]) => (
+      [k, invertLt(v)]
+    )),
+  )
 );
 
 export type VariantsOpts = {

@@ -2,24 +2,30 @@ import { TextStyle, ViewStyle, ImageStyle } from 'react-native';
 
 export type Style = ViewStyle | TextStyle | ImageStyle;
 
+export type StyleMap<T> = { [s: string]: T } | T[];
+
 export const mapStyles = <V>(
   /**
-   * An object to be iterated over
+   * An object or array to be iterated over.
    */
-  map: { [key: string | number]: V },
+  map: StyleMap<V>,
   /**
-   * A callback to produce style objects
+   * A callback to produce style objects.
    */
   fn: (value: V, key: string) => Style,
   /**
-   * Prefix to be added to each key
+   * Prefix to be added to each key.
    */
   prefix?: string,
-): { [key: string]: Style } => {
+): { [s: string]: Style } => {
+  const entries = Array.isArray(map)
+    ? map.map((v) => [v, v])
+    : Object.entries(map);
+
   return Object.fromEntries(
-    Object.entries(map).map(([k, v]) => [
+    entries.map(([k, v]) => [
       prefix ? `${prefix}-${String(k)}` : k,
-      fn(v, k),
+      fn(v, String(k)),
     ]),
   );
 };
