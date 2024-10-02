@@ -36,4 +36,3 @@ const makeTheme = (name: typeof themeNames[number]) => {
 export const themes = Object.fromEntries(
   themeNames.map((n) => [n, makeTheme(n)]),
 );
-

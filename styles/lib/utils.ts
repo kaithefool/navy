@@ -2,6 +2,8 @@ import { TextStyle, ViewStyle, ImageStyle } from 'react-native';
 
 export type Style = ViewStyle | TextStyle | ImageStyle;
 
+export type Styles = { [s: string]: Style };
+
 export type StyleMap<T> = { [s: string]: T } | T[];
 
 export const mapStyles = <V>(
@@ -28,4 +30,13 @@ export const mapStyles = <V>(
       fn(v, String(k)),
     ]),
   );
+};
+
+export const st = (styles: Styles, ...styleNames: string[]) => {
+  const names = styleNames
+    .flatMap((ns) => ns.split(' '))
+    .map((n) => n.trim())
+    .filter((n) => n);
+
+  return Object.assign({}, ...names.map((n) => styles[n] || {}));
 };

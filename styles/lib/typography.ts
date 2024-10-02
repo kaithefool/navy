@@ -2,7 +2,7 @@ import { TextStyle } from 'react-native';
 import { Palette } from './palette';
 import { mapStyles, StyleMap } from './utils';
 
-export type ThemeTypographyOpts = {
+export type TypographyOpts = {
   fontFamilies: StyleMap<TextStyle['fontFamily']>;
   weights?: StyleMap<TextStyle['fontWeight']>;
   styles?: StyleMap<TextStyle['fontStyle']>;
@@ -17,7 +17,7 @@ export default function makeTypographyStyles(palette: Palette, {
   body = { letterSpacing: .12 },
   headings,
   //
-}: ThemeTypographyOpts) {
+}: TypographyOpts) {
   return {
     ...mapStyles(palette, (v) => ({ color: v }), 'text'),
     ...mapStyles(fontFamilies, (v) => ({ fontFamily: v }), 'font'),

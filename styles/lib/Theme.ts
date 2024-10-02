@@ -1,29 +1,16 @@
 import { Palette } from './palette';
-import makeTextStyles, { ThemeTypographyOpts } from './typography';
-import { Style } from './utils';
+import makeTypographyStyles, { TypographyOpts } from './typography';
+import { Styles } from './utils';
 
 export default class Theme {
-  styles: { [s: string]: Style } = {};
+  readonly styles: Styles;
 
-  palette: Palette;
-  typography: ThemeTypographyOpts;
-
-  constructor({
-    palette,
-    typography,
-  }: {
+  constructor(public opts: {
     palette: Palette;
-    typography: ThemeTypographyOpts;
+    typography: TypographyOpts;
   }) {
-    this.palette = palette;
-    this.typography = typography;
-
-    this.makeStyles();
-  }
-
-  makeStyles() {
     this.styles = {
-      ...makeTextStyles(this.palette, this.typography),
+      ...makeTypographyStyles(opts.palette, opts.typography),
       //
     };
   }
