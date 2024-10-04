@@ -32,11 +32,61 @@ export const mapStyles = <V>(
   );
 };
 
-export const st = (styles: Styles, ...styleNames: string[]) => {
-  const names = styleNames
-    .flatMap((ns) => ns.split(' '))
-    .map((n) => n.trim())
-    .filter((n) => n);
+export const composeStyles = (
+  src: Styles,
+  ...styles: (string | Style)[]
+): Style => {
+  const seq = styles
+    .map((s): string[] | Style => (
+      typeof s === 'string'
+        ? s.split(' ').map((n) => n.trim()).filter((n) => n)
+        : s
+    ))
+    .flat()
+    .map((s) => {
+      if (typeof s === 'string') return src[s] ?? {};
+      return s;
+    });
 
-  return Object.assign({}, ...names.map((n) => styles[n] || {}));
+  return Object.assign({}, ...seq);
+};
+
+type TagFunctionParams<T> = [
+  TemplateStringsArray, ...T[],
+];
+
+const isTemplateStringsArray = (a: unknown): a is TemplateStringsArray => {
+  return Array.isArray(a)
+    && a.every((v) => typeof v === 'string')
+    && 'raw' in a;
+};
+
+const isTagFunctionParams = <T>(p: unknown[]): p is TagFunctionParams<T> => {
+  return isTemplateStringsArray(p);
+};
+
+export type StyParams = (string | Style)[]
+| [TemplateStringsArray, ...(string | Style)[]]
+
+export const sty = (
+  src: Styles,
+  ...styles: StyParams
+) => {
+  let ss: (string | Style)[];
+
+  if (isTagFunctionParams(styles)) {
+    const [tmpl, ...p] = styles;
+
+    ss = tmpl
+      .flatMap((t, i) => [t, p[i]] as const)
+      .filter((s) => s);
+  } else {
+    ss = styles;
+  }
+
+  return composeStyles(src, ...ss);
+};
+
+export const styFromSrc = (src: Styles) => {
+  return (...args: StyParams) => sty(src, ...args);
 };

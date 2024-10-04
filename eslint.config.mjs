@@ -12,6 +12,7 @@ export default [
       'no-trailing-spaces': ['error'],
       'no-multiple-empty-lines': ['error', { max: 1 }],
       'comma-dangle': ['error', 'always-multiline'],
+      'comma-spacing': ['error', { before: false, after: true }],
       'quote-props': ['error', 'as-needed'],
       'max-len': ['error', { code: 80 }],
       'object-curly-spacing': ['error', 'always'],

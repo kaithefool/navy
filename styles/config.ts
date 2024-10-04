@@ -17,7 +17,9 @@ export const themeNames = [
   'dark',
 ] as const;
 
-const makeTheme = (name: typeof themeNames[number]) => {
+export type ThemeName = typeof themeNames[number];
+
+const makeTheme = (name: ThemeName) => {
   const palette = makePalette({
     themes: colors,
     grays: true,

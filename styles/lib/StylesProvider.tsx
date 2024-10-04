@@ -1,10 +1,26 @@
-import React, { ReactNode } from 'react';
-import StylesContext from './StylesContext';
+import React, { ReactNode, useState } from 'react';
+import { useColorScheme } from 'react-native';
+import StylesContext, { StylesContextType } from './StylesContext';
+import { styFromSrc } from './utils';
+import { ThemeName, themeNames, themes } from '../config';
 
 const StylesProvider = ({ children }: {
-  children: ReactNode | (() => ReactNode);
+  children: ReactNode | ((value: StylesContextType) => ReactNode);
 }) => {
-  const value = {};
+  const deviceConfig = useColorScheme();
+  const [userConfig, setUserConfig] = useState<ThemeName | null>(null);
+  const theme = themes[
+    userConfig ?? deviceConfig ?? themeNames[0]
+  ];
+
+  const value: StylesContextType = {
+    themes,
+    theme,
+    setTheme: setUserConfig,
+    sty: theme
+      ? styFromSrc(theme.styles)
+      : () => ({}),
+  };
 
   return (
     <StylesContext.Provider value={value}>
