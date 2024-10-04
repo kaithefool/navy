@@ -1,8 +1,8 @@
 import React, { ReactNode, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import StylesContext, { StylesContextType } from './StylesContext';
-import { styFromSrc } from './utils';
-import { ThemeName, themeNames, themes } from '../config';
+import { styFromSrc } from '../utils';
+import { ThemeName, themeNames, themes } from '../../config';
 
 const StylesProvider = ({ children }: {
   children: ReactNode | ((value: StylesContextType) => ReactNode);

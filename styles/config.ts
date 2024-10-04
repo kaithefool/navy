@@ -1,5 +1,5 @@
 import makePalette from './lib/palette';
-import Theme from './lib/theme';
+import Theme from './lib/Theme';
 
 export const colors = {
   primary: '#0d6efd',
@@ -20,14 +20,26 @@ export const themeNames = [
 export type ThemeName = typeof themeNames[number];
 
 const makeTheme = (name: ThemeName) => {
+  const dark = name === 'dark';
   const palette = makePalette({
     themes: colors,
     grays: true,
-    invert: name === 'dark' && { grays: true },
+    invert: dark && { grays: true },
   });
 
   return new Theme({
     palette,
+    nav: {
+      dark,
+      colors: {
+        primary: palette.primary,
+        background: palette.body,
+        card: palette['gray-100'],
+        text: palette['gray-900'],
+        border: palette['gray-200'],
+        notification: palette.danger,
+      },
+    },
     typography: {
       fontFamilies: ['noto-sans'],
       weights: { normal: 400, bold: 600 },

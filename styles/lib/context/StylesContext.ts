@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import Theme from './theme';
-import { Style, StyParams } from './utils';
-import { ThemeName } from '../config';
+import { Style, StyParams } from '../utils';
+import { ThemeName } from '../../config';
+import Theme from '../Theme';
 
 export type StylesContextType = {
   /**
