@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { Style, StyParams } from '../utils';
-import { ThemeName } from '../../config';
+import { ThemeName, themeNames, themes } from '../../config';
 import Theme from '../Theme';
 
 export type StylesContextType = {
@@ -11,14 +11,14 @@ export type StylesContextType = {
   /**
    * Current theme
    */
-  theme: Theme | null;
+  theme: Theme;
   setTheme: (name: ThemeName) => void;
   sty: (...s: StyParams) => Style;
 };
 
 export default createContext<StylesContextType>({
   themes: {},
-  theme: null,
+  theme: themes[themeNames[0]],
   setTheme: () => {},
   sty: () => ({}),
 });

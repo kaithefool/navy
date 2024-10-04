@@ -7,7 +7,7 @@ import { Styles } from './utils';
 export default class Theme {
   readonly styles: Styles;
 
-  constructor(public opts: {
+  constructor(public readonly opts: {
     palette: Palette;
     typography: TypographyOpts;
     nav: NavTheme,
