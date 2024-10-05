@@ -11,4 +11,4 @@ export {
   StylesNavTheme,
 };
 
-Styles.Provider = StylesProvider;
+export default Styles;

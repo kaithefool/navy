@@ -1,5 +1,4 @@
 import { TextStyle, ViewStyle, ImageStyle } from 'react-native';
-import { themes } from '../config';
 
 export type Style = ViewStyle | TextStyle | ImageStyle;
 
@@ -40,7 +39,7 @@ export const composeStyles = (
   const seq = styles
     .map((s): string[] | Style => (
       typeof s === 'string'
-        ? s.split(' ').map((n) => n.trim()).filter((n) => n)
+        ? s.split(/\s/).map((n) => n.trim()).filter((n) => n)
         : s
     ))
     .flat()

@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
-import { ThemeProvider } from '@react-navigation/native';
 import { Slot, SplashScreen } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -9,17 +7,16 @@ import {
   NotoSans_600SemiBold,
 } from '@expo-google-fonts/noto-sans';
 
-import { getNavTheme } from '../styles';
+import Styles from '../styles';
 
 // Prevents SplashScreen from auto hiding while the fonts are loaded.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme() ?? 'light',
-    [loaded, err] = useFonts({
-      NotoSans_400Regular,
-      NotoSans_600SemiBold,
-    });
+  const [loaded, err] = useFonts({
+    NotoSans_400Regular,
+    NotoSans_600SemiBold,
+  });
 
   useEffect(() => {
     if (loaded || err) {
@@ -32,10 +29,10 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={getNavTheme(colorScheme)}>
+    <Styles>
       <SafeAreaView>
         <Slot />
       </SafeAreaView>
-    </ThemeProvider>
+    </Styles>
   );
 }
