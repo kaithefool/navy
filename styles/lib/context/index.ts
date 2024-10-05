@@ -1,14 +1,14 @@
 import Styles from './Styles';
 import StylesContext from './StylesContext';
 import StylesProvider from './StylesProvider';
-import StylesNavTheme from './StylesNavTheme';
 import useStyles from './useStyles';
+import StylesNavTheme from './StylesNavTheme';
 
 export {
   StylesContext,
   StylesProvider,
-  StylesNavTheme,
   useStyles,
+  StylesNavTheme,
 };
 
 Styles.Provider = StylesProvider;

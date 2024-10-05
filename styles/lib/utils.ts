@@ -1,4 +1,5 @@
 import { TextStyle, ViewStyle, ImageStyle } from 'react-native';
+import { themes } from '../config';
 
 export type Style = ViewStyle | TextStyle | ImageStyle;
 
@@ -78,7 +79,18 @@ export const sty = (
     const [tmpl, ...p] = styles;
 
     ss = tmpl
-      .flatMap((t, i) => [t, p[i]] as const)
+      // weave tmpl string and values
+      .flatMap<string | Style>((t, i) => [t, p[i]])
+      // join all adjacent strings
+      .reduce<(string | Style)[]>((acc, cur) => {
+        const last = acc.slice(-1)[0];
+
+        if (typeof cur === 'string' && typeof last === 'string') {
+          return [...acc.slice(0, -1), `${last}${cur}`];
+        }
+
+        return [...acc, cur];
+      }, [])
       .filter((s) => s);
   } else {
     ss = styles;

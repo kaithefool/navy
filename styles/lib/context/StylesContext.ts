@@ -13,11 +13,21 @@ export type StylesContextType = {
    */
   theme: Theme;
   setTheme: (name: ThemeName) => void;
+  /**
+   * A function to compose styles based on current theme.
+   * Can be used as a regular function or a tag function with template laterals.
+   *
+   * @param {...(string | Style)} styles - Style names or inline styles
+   * @example
+   * sty`text-primary fw-bold ${{ marginBottom: 2 }}`
+   * @example
+   * sty('text-primary fw-bold', { marginBottom: 2 })
+   */
   sty: (...s: StyParams) => Style;
 };
 
 export default createContext<StylesContextType>({
-  themes: {},
+  themes: themes,
   theme: themes[themeNames[0]],
   setTheme: () => {},
   sty: () => ({}),
