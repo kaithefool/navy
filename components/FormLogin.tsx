@@ -5,10 +5,12 @@ import { useStyles } from '../styles';
 const FormLogin = () => {
   const { sty } = useStyles();
 
+  // console.log(sty`text-primary ${{ display: 'flex' }}`);
+
   return (
-    <View>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <Text style={sty`text-primary ${{ display: 'flex' }}`}>Login</Text>
       <Pressable>
-        <Text style={sty`text-primary`}>Login</Text>
       </Pressable>
     </View>
   );

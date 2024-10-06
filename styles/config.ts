@@ -24,7 +24,7 @@ const makeTheme = (name: ThemeName) => {
   const palette = makePalette({
     themes: colors,
     grays: true,
-    invert: dark && { grays: true },
+    invert: dark && { grays: true, body: true },
   });
 
   return new Theme({

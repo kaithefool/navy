@@ -62,7 +62,7 @@ const isTemplateStringsArray = (a: unknown): a is TemplateStringsArray => {
 };
 
 const isTagFunctionParams = <T>(p: unknown[]): p is TagFunctionParams<T> => {
-  return isTemplateStringsArray(p);
+  return isTemplateStringsArray(p[0]);
 };
 
 export type StyParams = (string | Style)[]
