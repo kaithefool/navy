@@ -20,6 +20,8 @@ export default [
       'key-spacing': ['error', { beforeColon: false, afterColon: true }],
       'array-bracket-spacing': ['error', 'never'],
       'arrow-parens': ['error', 'always'],
+      'prefer-template': ['error'],
+      'no-useless-concat': ['error'],
     },
   },
   pluginJs.configs.recommended,
