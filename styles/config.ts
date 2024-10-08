@@ -40,10 +40,8 @@ const makeTheme = (name: ThemeName) => {
         notification: palette.danger,
       },
     },
-    typography: {
-      fontFamilies: ['noto-sans'],
-      weights: { normal: 400, bold: 600 },
-    },
+    fontFamilies: ['noto-sans'],
+    weights: { normal: 400, bold: 600 },
   });
 };
 

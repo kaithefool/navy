@@ -19,7 +19,7 @@ export const mapStyles = <V>(
    * Prefix to be added to each key.
    */
   prefix?: string,
-): { [s: string]: Style } => {
+): Styles => {
   const entries = Array.isArray(map)
     ? map.map((v) => [v, v])
     : Object.entries(map);
