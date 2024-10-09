@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { TextStyle, ViewStyle, ImageStyle } from 'react-native';
 import { Style, StyParams } from '../utils';
 import { ThemeName, themeNames, themes } from '../../config';
 import Theme from '../Theme';
@@ -23,7 +24,7 @@ export type StylesContextType = {
    * @example
    * sty('text-primary fw-bold', { marginBottom: 2 })
    */
-  sty: (...s: StyParams) => Style;
+  sty: (...s: StyParams) => TextStyle | ViewStyle | ImageStyle;
 };
 
 export default createContext<StylesContextType>({

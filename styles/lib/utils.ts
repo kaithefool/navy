@@ -1,10 +1,42 @@
 import { TextStyle, ViewStyle, ImageStyle } from 'react-native';
+import Theme from './Theme';
+import { defaults } from './consts';
 
-export type Style = ViewStyle | TextStyle | ImageStyle;
+type StyTextStyle = Omit<TextStyle, 'fontSize'> & {
+  fontSize?: TextStyle['fontSize'] | `${number}%`;
+};
+
+export {
+  StyTextStyle as TextStyle,
+  ViewStyle,
+  ImageStyle,
+};
+
+export type Style = StyTextStyle | ViewStyle | ImageStyle;
 
 export type Styles = { [s: string]: Style };
 
 export type StyleMap<T> = { [s: string]: T } | T[];
+
+export const parseStyle = (
+  theme: Theme,
+  style: Style,
+): ViewStyle | TextStyle | ImageStyle => {
+  const st: Style = { ...style };
+
+  // font size pencentage
+  if (
+    'fontSize' in st
+    && typeof st.fontSize === 'string'
+    && st.fontSize.match(/^\d+%$/)
+  ) {
+    const { fontSizes: { base = defaults.fontSizes.base } = {} } = theme.opts;
+    const pct = Number(st.fontSize.replace('%', '')) / 100;
+    st.fontSize = base * pct;
+  }
+
+  return st;
+};
 
 export const mapStyles = <V>(
   /**
@@ -33,9 +65,9 @@ export const mapStyles = <V>(
 };
 
 export const composeStyles = (
-  src: Styles,
+  theme: Theme,
   ...styles: (string | Style)[]
-): Style => {
+) => {
   const seq = styles
     .map((s): string[] | Style => (
       typeof s === 'string'
@@ -44,11 +76,14 @@ export const composeStyles = (
     ))
     .flat()
     .map((s) => {
-      if (typeof s === 'string') return src[s] ?? {};
+      if (typeof s === 'string') return theme.styles[s] ?? {};
       return s;
     });
 
-  return Object.assign({}, ...seq);
+  return parseStyle(
+    theme,
+    Object.assign({}, ...seq),
+  );
 };
 
 type TagFunctionParams<T> = [
@@ -69,7 +104,7 @@ export type StyParams = (string | Style)[]
 | [TemplateStringsArray, ...(string | Style)[]]
 
 export const sty = (
-  src: Styles,
+  theme: Theme,
   ...styles: StyParams
 ) => {
   let ss: (string | Style)[];
@@ -95,9 +130,9 @@ export const sty = (
     ss = styles;
   }
 
-  return composeStyles(src, ...ss);
+  return composeStyles(theme, ...ss);
 };
 
-export const styFromSrc = (src: Styles) => {
-  return (...args: StyParams) => sty(src, ...args);
+export const styWithTheme = (theme: Theme) => {
+  return (...args: StyParams) => sty(theme, ...args);
 };

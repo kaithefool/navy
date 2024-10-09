@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import StylesContext, { StylesContextType } from './StylesContext';
-import { styFromSrc } from '../utils';
+import { styWithTheme } from '../utils';
 import { ThemeName, themeNames, themes } from '../../config';
 
 const StylesProvider = ({ children }: {
@@ -18,7 +18,7 @@ const StylesProvider = ({ children }: {
     theme,
     setTheme: setUserConfig,
     sty: theme
-      ? styFromSrc(theme.styles)
+      ? styWithTheme(theme)
       : () => ({}),
   };
 

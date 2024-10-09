@@ -7,7 +7,7 @@ const FormLogin = () => {
 
   return (
     <View>
-      <Text style={sty`${{ textAlign: 'center' }}`}>
+      <Text style={sty`h1 text-center`}>
         Login
       </Text>
       <Pressable>

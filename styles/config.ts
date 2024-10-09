@@ -42,6 +42,11 @@ const makeTheme = (name: ThemeName) => {
     },
     fontFamilies: ['noto-sans'],
     weights: { normal: 400, bold: 600 },
+    body: {
+      color: palette['gray-900'],
+      letterSpacing: 1.2,
+    },
+    headings: { fontWeight: 'bold' },
   });
 };
 
