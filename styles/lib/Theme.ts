@@ -1,6 +1,6 @@
 import { Theme as NavTheme } from '@react-navigation/native';
 
-import { Styles } from './utils';
+import { Styles } from './helpers';
 import makeTypographyStyles, { TypographyOpts } from './typography';
 import makeLayoutStyles, { LayoutOpts } from './layout';
 
@@ -11,8 +11,7 @@ export default class Theme {
     nav: NavTheme;
   }
     & TypographyOpts
-    & LayoutOpts,
-  ) {
+    & LayoutOpts) {
     this.styles = {
       ...makeTypographyStyles(opts),
       ...makeLayoutStyles(opts),

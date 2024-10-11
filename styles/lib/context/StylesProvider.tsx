@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import StylesContext, { StylesContextType } from './StylesContext';
-import { styWithTheme } from '../utils';
+import { styWithTheme } from '../helpers';
 import { ThemeName, themeNames, themes } from '../../config';
 
 const StylesProvider = ({ children }: {

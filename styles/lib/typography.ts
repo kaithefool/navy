@@ -1,5 +1,5 @@
 import { Palette } from './palette';
-import { mapStyles, StyleMap, TextStyle } from './utils';
+import { mapStyles, StyleMap, TextStyle, Styles } from './helpers';
 import { defaults } from './consts';
 
 export type TypographyOpts = {
@@ -33,7 +33,7 @@ export default function makeTypographyStyles({
   body = {},
   headings = {},
   //
-}: TypographyOpts) {
+}: TypographyOpts): Styles {
   const fs = Object.assign({}, defaults.fontSizes, fontSizes);
 
   return {

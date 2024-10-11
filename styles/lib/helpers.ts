@@ -136,3 +136,9 @@ export const sty = (
 export const styWithTheme = (theme: Theme) => {
   return (...args: StyParams) => sty(theme, ...args);
 };
+
+export const arrayToNumKeyObj = <T>(array: T[]) => {
+  return array.reduce<{ [n: number]: T; }>(
+    (o, v, i) => ({ ...o, [i]: v }), {},
+  );
+};

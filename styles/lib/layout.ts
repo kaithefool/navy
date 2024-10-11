@@ -1,32 +1,56 @@
 import { Palette } from './palette';
-import { mapStyles } from './utils';
+import { arrayToNumKeyObj, mapStyles, Styles } from './helpers';
+import { DimensionValue } from 'react-native';
 
 export type LayoutOpts = {
   palette: Palette;
   spacer?: number;
   steps?: number[];
+  dimensions?: { [s: string | number]: DimensionValue };
+  borderWidths?: number[],
+  borderRadius?: number[],
 }
 
 export default function makeLayoutStyles({
   palette,
   spacer = 1.5,
   steps = [0, .25, .5, 1, 1.5, 3],
-}: LayoutOpts) {
-  const gaps = steps.reduce<{ [n: number]: number }>(
-    (a, v, i) => ({ ...a, [i]: v * spacer }), {},
-  );
-  const gapsWithAuto = { ...gaps, auto: 'auto' } as const;
-  const dimensions = {
+  dimensions = {
     auto: 'auto',
     0: '0%',
     25: '25%',
     50: '50%',
     75: '75%',
     100: '100%',
-  } as const;
+  },
+  borderWidths = [0, 1, 2, 3, 4, 5],
+  borderRadius = [0, 1, 2, 3, 4, 5],
+}: LayoutOpts): Styles {
+  const gaps = steps.reduce<{ [n: number]: number }>(
+    (a, v, i) => ({ ...a, [i]: v * spacer }), {},
+  );
+  const gapsWithAuto = { ...gaps, auto: 'auto' } as const;
+  const bw = arrayToNumKeyObj(borderWidths);
+  const br = arrayToNumKeyObj(borderRadius);
 
   return {
     ...mapStyles(palette, ((v) => ({ backgroundColor: v })), 'bg'),
+
+    ...mapStyles(palette, ((v) => ({ borderColor: v })), 'border'),
+    ...mapStyles(palette, ((v) => ({ borderTopColor: v })), 'border-top'),
+    ...mapStyles(palette, ((v) => ({ borderBottomColor: v })), 'border-bottom'),
+    ...mapStyles(palette, ((v) => ({ borderLeftColor: v })), 'border-left'),
+    ...mapStyles(palette, ((v) => ({ borderRightColor: v })), 'border-right'),
+    ...mapStyles(bw, ((v) => ({ borderWidth: v })), 'border'),
+    ...mapStyles(bw, ((v) => ({ borderTopWidth: v })), 'border-top'),
+    ...mapStyles(bw, ((v) => ({ borderBottomWidth: v })), 'border-bottom'),
+    ...mapStyles(bw, ((v) => ({ borderLeftWidth: v })), 'border-left'),
+    ...mapStyles(bw, ((v) => ({ borderRightWidth: v })), 'border-right'),
+    ...mapStyles(br, ((v) => ({ borderRadius: v })), 'rounded'),
+    ...mapStyles(br, ((v) => ({ borderTopLeftRadius: v })), 'rounded-top-left'),
+    ...mapStyles(br, ((v) => ({ borderTopRightRadius: v })), 'rounded-top-right'),
+    ...mapStyles(br, ((v) => ({ borderBottomRightRadius: v })), 'rounded-bottom-right'),
+    ...mapStyles(br, ((v) => ({ borderBottomRightRadius: v })), 'rounded-bottom-left'),
 
     ...mapStyles(gaps, ((v) => ({ padding: v })), 'p'),
     ...mapStyles(gaps, ((v) => ({ paddingTop: v })), 'pt'),

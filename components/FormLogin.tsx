@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, Text, TextInput, View } from 'react-native';
 import { useStyles } from '../styles';
 
 const FormLogin = () => {
@@ -8,11 +8,13 @@ const FormLogin = () => {
   return (
     <View style={sty`
       row align-items-center justify-content-center h-100
-      bg-primary
     `}>
-      <Text style={sty`h1 text-center text-body`}>
-        Login
-      </Text>
+      <View>
+        <TextInput style={sty`border-1 rounded-2 ${{ height: 25 }}`} />
+        <Text style={sty`h1 text-center`}>
+          Login
+        </Text>
+      </View>
     </View>
   );
 };
