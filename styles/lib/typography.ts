@@ -37,19 +37,19 @@ export default function makeTypographyStyles({
   const fs = Object.assign({}, defaults.fontSizes, fontSizes);
 
   return {
-    ...mapStyles(palette, (v) => ({ color: v, ...body }), 'text'),
-    ...mapStyles(fontFamilies, (v) => ({ fontFamily: v, ...body }), 'font'),
-    ...mapStyles(weights, (v) => ({ fontWeight: v, ...body }), 'fw'),
-    ...mapStyles(styles, (v) => ({ fontStyle: v, ...body }), 'fst'),
-    ...mapStyles(fs, ((v) => ({ fontSize: v, ...body })), 'fs'),
+    ...mapStyles(palette, (v) => ({ ...body, color: v }), 'text'),
+    ...mapStyles(fontFamilies, (v) => ({ ...body, fontFamily: v }), 'font'),
+    ...mapStyles(weights, (v) => ({ ...body, fontWeight: v }), 'fw'),
+    ...mapStyles(styles, (v) => ({ ...body, fontStyle: v }), 'fst'),
+    ...mapStyles(fs, ((v) => ({ ...body, fontSize: v })), 'fs'),
     ...mapStyles(
       ['auto', 'left', 'right', 'center', 'justify'] as const,
-      ((v) => ({ textAlign: v })),
+      ((v) => ({ ...body, textAlign: v })),
       'text',
     ),
     ...mapStyles(
       { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 } as const,
-      ((v) => ({ fontSize: fs[v], ...body, ...headings })),
+      ((v) => ({ ...body, fontSize: fs[v], ...headings })),
     ),
   };
 }

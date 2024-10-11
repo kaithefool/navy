@@ -1,11 +1,14 @@
+import { Palette } from './palette';
 import { mapStyles } from './utils';
 
 export type LayoutOpts = {
-  spacer?: number,
-  steps?: number[],
+  palette: Palette;
+  spacer?: number;
+  steps?: number[];
 }
 
 export default function makeLayoutStyles({
+  palette,
   spacer = 1.5,
   steps = [0, .25, .5, 1, 1.5, 3],
 }: LayoutOpts) {
@@ -13,8 +16,18 @@ export default function makeLayoutStyles({
     (a, v, i) => ({ ...a, [i]: v * spacer }), {},
   );
   const gapsWithAuto = { ...gaps, auto: 'auto' } as const;
+  const dimensions = {
+    auto: 'auto',
+    0: '0%',
+    25: '25%',
+    50: '50%',
+    75: '75%',
+    100: '100%',
+  } as const;
 
   return {
+    ...mapStyles(palette, ((v) => ({ backgroundColor: v })), 'bg'),
+
     ...mapStyles(gaps, ((v) => ({ padding: v })), 'p'),
     ...mapStyles(gaps, ((v) => ({ paddingTop: v })), 'pt'),
     ...mapStyles(gaps, ((v) => ({ paddingBottom: v })), 'pb'),
@@ -69,5 +82,21 @@ export default function makeLayoutStyles({
       around: 'space-around',
       evenly: 'space-evenly',
     } as const, ((v) => ({ alignContent: v })), 'align-content'),
+    ...mapStyles({
+      start: 'flex-start',
+      end: 'flex-end',
+      center: 'center',
+      between: 'space-between',
+      around: 'space-around',
+      evenly: 'space-evenly',
+    } as const, ((v) => ({ justifyContent: v })), 'justify-content'),
+
+    fill: { width: '100%', height: '100%' },
+    ...mapStyles(dimensions, ((v) => ({ height: v })), 'h'),
+    ...mapStyles(dimensions, ((v) => ({ width: v })), 'w'),
+    ...mapStyles(dimensions, ((v) => ({ maxHeight: v })), 'mah'),
+    ...mapStyles(dimensions, ((v) => ({ maxWidth: v })), 'maw'),
+    ...mapStyles(dimensions, ((v) => ({ minHeight: v })), 'mih'),
+    ...mapStyles(dimensions, ((v) => ({ minWidth: v })), 'miw'),
   };
 }

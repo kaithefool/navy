@@ -6,12 +6,13 @@ const FormLogin = () => {
   const { sty } = useStyles();
 
   return (
-    <View>
-      <Text style={sty`h1 text-center`}>
+    <View style={sty`
+      row align-items-center justify-content-center h-100
+      bg-primary
+    `}>
+      <Text style={sty`h1 text-center text-body`}>
         Login
       </Text>
-      <Pressable>
-      </Pressable>
     </View>
   );
 };
