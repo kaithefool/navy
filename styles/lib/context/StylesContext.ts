@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 import { TextStyle, ViewStyle, ImageStyle } from 'react-native';
-import { Style, StyParams } from '../helpers';
+import { StyParams } from './helpers';
 import { ThemeName, themeNames, themes } from '../../config';
-import Theme from '../Theme';
+import Theme from '../theme';
 
 export type StylesContextType = {
   /**
@@ -16,7 +16,7 @@ export type StylesContextType = {
   setTheme: (name: ThemeName) => void;
   /**
    * A function to compose styles based on current theme.
-   * Can be used as a regular function or a tag function with template laterals.
+   * Can be used as a regular function or a tag function with template literals.
    *
    * @param {...(string | Style)} styles - Style names or inline styles
    * @example

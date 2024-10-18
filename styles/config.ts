@@ -1,5 +1,4 @@
-import makePalette from './lib/palette';
-import Theme from './lib/Theme';
+import Theme from './lib/theme';
 
 export const colors = {
   primary: '#0d6efd',
@@ -21,7 +20,7 @@ export type ThemeName = typeof themeNames[number];
 
 const makeTheme = (name: ThemeName) => {
   const dark = name === 'dark';
-  const palette = makePalette({
+  const palette = Theme.makePalette({
     themes: colors,
     grays: true,
     invert: dark && { grays: true, body: true },
@@ -41,7 +40,7 @@ const makeTheme = (name: ThemeName) => {
       },
     },
     fontFamilies: ['noto-sans'],
-    weights: { normal: 400, bold: 600 },
+    fontWeights: { normal: 400, bold: 600 },
     body: {
       color: palette['gray-900'],
       letterSpacing: 1.2,

@@ -1,35 +1,16 @@
-import { Palette } from './palette';
-import { arrayToNumKeyObj, mapStyles, Styles } from './helpers';
-import { DimensionValue } from 'react-native';
-
-export type LayoutOpts = {
-  palette: Palette;
-  spacer?: number;
-  steps?: number[];
-  dimensions?: { [s: string | number]: DimensionValue };
-  borderWidths?: number[],
-  borderRadius?: number[],
-}
+import { arrayToNumKeyObj, mapStyles } from './helpers';
+import { Styles, ThemeConfig } from './Theme';
 
 export default function makeLayoutStyles({
   palette,
-  spacer = 1.5,
-  steps = [0, .25, .5, 1, 1.5, 3],
-  dimensions = {
-    auto: 'auto',
-    0: '0%',
-    25: '25%',
-    50: '50%',
-    75: '75%',
-    100: '100%',
-  },
-  borderWidths = [0, 1, 2, 3, 4, 5],
-  borderRadius = [0, 1, 2, 3, 4, 5],
-}: LayoutOpts): Styles {
-  const gaps = steps.reduce<{ [n: number]: number }>(
-    (a, v, i) => ({ ...a, [i]: v * spacer }), {},
-  );
-  const gapsWithAuto = { ...gaps, auto: 'auto' } as const;
+  spacer,
+  spacers,
+  dimensions,
+  borderWidths,
+  borderRadius,
+}: ThemeConfig): Styles {
+  const sp = arrayToNumKeyObj(spacers);
+  const spWiAuto = { ...sp, auto: 'auto' } as const;
   const bw = arrayToNumKeyObj(borderWidths);
   const br = arrayToNumKeyObj(borderRadius);
 
@@ -52,25 +33,25 @@ export default function makeLayoutStyles({
     ...mapStyles(br, ((v) => ({ borderBottomRightRadius: v })), 'rounded-bottom-right'),
     ...mapStyles(br, ((v) => ({ borderBottomRightRadius: v })), 'rounded-bottom-left'),
 
-    ...mapStyles(gaps, ((v) => ({ padding: v })), 'p'),
-    ...mapStyles(gaps, ((v) => ({ paddingTop: v })), 'pt'),
-    ...mapStyles(gaps, ((v) => ({ paddingBottom: v })), 'pb'),
-    ...mapStyles(gaps, ((v) => ({ paddingLeft: v })), 'pl'),
-    ...mapStyles(gaps, ((v) => ({ paddingRight: v })), 'pr'),
-    ...mapStyles(gaps, ((v) => ({ paddingHorizontal: v })), 'px'),
-    ...mapStyles(gaps, ((v) => ({ paddingVertical: v })), 'py'),
+    ...mapStyles(spWiAuto, ((v) => ({ padding: v })), 'p'),
+    ...mapStyles(spWiAuto, ((v) => ({ paddingTop: v })), 'pt'),
+    ...mapStyles(spWiAuto, ((v) => ({ paddingBottom: v })), 'pb'),
+    ...mapStyles(spWiAuto, ((v) => ({ paddingLeft: v })), 'pl'),
+    ...mapStyles(spWiAuto, ((v) => ({ paddingRight: v })), 'pr'),
+    ...mapStyles(spWiAuto, ((v) => ({ paddingHorizontal: v })), 'px'),
+    ...mapStyles(spWiAuto, ((v) => ({ paddingVertical: v })), 'py'),
 
-    ...mapStyles(gapsWithAuto, ((v) => ({ margin: v })), 'm'),
-    ...mapStyles(gapsWithAuto, ((v) => ({ marginTop: v })), 'mt'),
-    ...mapStyles(gapsWithAuto, ((v) => ({ marginBottom: v })), 'mb'),
-    ...mapStyles(gapsWithAuto, ((v) => ({ marginLeft: v })), 'ml'),
-    ...mapStyles(gapsWithAuto, ((v) => ({ marginRight: v })), 'mr'),
-    ...mapStyles(gapsWithAuto, ((v) => ({ marginHorizontal: v })), 'mx'),
-    ...mapStyles(gapsWithAuto, ((v) => ({ marginVertical: v })), 'my'),
+    ...mapStyles(spWiAuto, ((v) => ({ margin: v })), 'm'),
+    ...mapStyles(spWiAuto, ((v) => ({ marginTop: v })), 'mt'),
+    ...mapStyles(spWiAuto, ((v) => ({ marginBottom: v })), 'mb'),
+    ...mapStyles(spWiAuto, ((v) => ({ marginLeft: v })), 'ml'),
+    ...mapStyles(spWiAuto, ((v) => ({ marginRight: v })), 'mr'),
+    ...mapStyles(spWiAuto, ((v) => ({ marginHorizontal: v })), 'mx'),
+    ...mapStyles(spWiAuto, ((v) => ({ marginVertical: v })), 'my'),
 
-    ...mapStyles(gaps, ((v) => ({ gap: v })), 'gap'),
-    ...mapStyles(gaps, ((v) => ({ rowGap: v })), 'row-gap'),
-    ...mapStyles(gaps, ((v) => ({ columnGap: v })), 'col-gap'),
+    ...mapStyles(sp, ((v) => ({ gap: v })), 'gap'),
+    ...mapStyles(sp, ((v) => ({ rowGap: v })), 'row-gap'),
+    ...mapStyles(sp, ((v) => ({ columnGap: v })), 'col-gap'),
     ...mapStyles([0, 1, 2, 3, 4, 5], ((v) => ({ flexGrow: v })), 'grow'),
     ...mapStyles([0, 1, 2, 3, 4, 5], ((v) => ({ flexShrink: v })), 'shrink'),
     ...mapStyles(
