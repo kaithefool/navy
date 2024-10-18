@@ -12,7 +12,9 @@ export default function makeTypographyStyles({
 }: ThemeConfig): Styles {
 
   return {
-    text: body,
+    // default text style
+    text: { fontSize: fontSizes.base, ...body },
+
     ...mapStyles(palette, (v) => ({ color: v }), 'text'),
     ...mapStyles(fontFamilies, (v) => ({ fontFamily: v }), 'font'),
     ...mapStyles(fontWeights, (v) => ({ fontWeight: v }), 'fw'),

@@ -53,6 +53,7 @@ export type ThemeOpts = {
     sm?: ViewStyle,
     md?: ViewStyle,
     lg?: ViewStyle,
+
     outline?: ViewStyle;
 
     pressed?: ViewStyle;
@@ -61,7 +62,7 @@ export type ThemeOpts = {
 };
 
 const defaultFontSizes = {
-  base: 14,
+  base: 16,
   xs: '625%',
   sm: '85%',
   md: '100%',
