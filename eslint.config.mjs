@@ -1,31 +1,11 @@
-import pluginJs from '@eslint/js';
-import pluginReact from 'eslint-plugin-react';
-import tseslint from 'typescript-eslint';
+import stylistic from '@stylistic/eslint-plugin'
+import ts from 'typescript-eslint'
 
 export default [
-  {
-    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    rules: {
-      indent: ['error', 2],
-      semi: ['error', 'always'],
-      quotes: ['error', 'single'],
-      'no-trailing-spaces': ['error'],
-      'no-multiple-empty-lines': ['error', { max: 1 }],
-      'comma-dangle': ['error', 'always-multiline'],
-      'comma-spacing': ['error', { before: false, after: true }],
-      'quote-props': ['error', 'as-needed'],
-      'max-len': ['error', { code: 100 }],
-      'object-curly-spacing': ['error', 'always'],
-      'object-curly-newline': ['error', { multiline: true }],
-      'key-spacing': ['error', { beforeColon: false, afterColon: true }],
-      'array-bracket-spacing': ['error', 'never'],
-      'arrow-parens': ['error', 'always'],
-      'prefer-template': ['error'],
-      'no-useless-concat': ['error'],
-      'function-paren-newline': ['error', 'consistent'],
-    },
-  },
-  pluginJs.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  ...tseslint.configs.recommended,
-];
+  ...ts.configs.recommended,
+  stylistic.configs.customize({
+    'object-curly-newline': 'always',
+    'function-paren-newline': 'consistent',
+    'max-len': { code: 100, ignorePattern: true },
+  }),
+]
