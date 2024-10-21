@@ -12,19 +12,32 @@ export const mapStyles = <V>(
    */
   fn: (value: V, key: string) => Style,
   /**
-   * Prefix to be added to each key.
+   * Prefix string to be added to each key.
+   *
+   * @example
+   * prefix-originalKey
    */
   prefix?: string,
+  /**
+   * Pseduo string to be added to each key
+   *
+   * @example
+   * orginalKey:pseduo
+   */
+  pseudo?: string,
 ): Styles => {
   const entries = Array.isArray(map)
     ? map.map((v) => [v, v])
     : Object.entries(map);
 
   return Object.fromEntries(
-    entries.map(([k, v]) => [
-      prefix ? `${prefix}-${String(k)}` : k,
-      fn(v, String(k)),
-    ]),
+    entries.map(([k, v]) => {
+      let key = String(k);
+      if (prefix) key = `${prefix}-${key}`;
+      if (pseudo) key = `${key}:${pseudo}`;
+
+      return [key, fn(v, String(k))];
+    }),
   );
 };
 

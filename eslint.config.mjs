@@ -1,11 +1,11 @@
-import stylistic from '@stylistic/eslint-plugin'
 import ts from 'typescript-eslint'
+import stylistic from '@stylistic/eslint-plugin'
 
 export default [
   ...ts.configs.recommended,
   stylistic.configs.customize({
-    'object-curly-newline': 'always',
+    'object-curly-newline': { consistent: true },
     'function-paren-newline': 'consistent',
-    'max-len': { code: 100, ignorePattern: true },
+    'max-len': { code: 100 },
   }),
 ]

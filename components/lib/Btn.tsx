@@ -6,23 +6,25 @@ import Text from './Text';
 const Btn = ({
   children,
   disabled = false,
+  variant = 'filled',
   ...props
 }: {
   children: ReactNode;
   disabled?: boolean;
+  variant?: 'filled' | 'tonal' | 'outline';
 }) => {
   const { sty } = useStyles();
   const [pressed, setPressed] = useState<boolean>(false);
 
   return (
     <Pressable
-      style={sty`bg-secondary p-2 px-3 rounded-3`}
+      style={sty`btn btn-outline-primary`}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
       {...props}
     >
       {isValidElement(children) ? children : (
-        <Text>{children}</Text>
+        <Text sty="btn-outline-primary:text">{children}</Text>
       )}
     </Pressable>
   );
