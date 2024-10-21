@@ -1,8 +1,8 @@
-import React, { ComponentType } from 'react';
-import { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import React, { ComponentType } from 'react'
+import { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native'
 
-import useStyles from './useStyles';
-import { StyParam } from './helpers';
+import useStyles from './useStyles'
+import { StyParam } from './helpers'
 
 const StylesStyled = ({
   component: C,
@@ -11,22 +11,22 @@ const StylesStyled = ({
   ...props
 }: {
   component: ComponentType<{
-    style?: StyleProp<TextStyle | ViewStyle | ImageStyle>;
-  }>;
-  sty?: StyParam | StyParam[];
-  defaultSty?: StyParam | StyParam[];
+    style?: StyleProp<TextStyle | ViewStyle | ImageStyle>
+  }>
+  sty?: StyParam | StyParam[]
+  defaultSty?: StyParam | StyParam[]
 }) => {
-  const { sty } = useStyles();
+  const { sty } = useStyles()
   const ss = [defaultStyles, styles]
     .flat()
-    .filter((s) => s !== undefined);
+    .filter(s => s !== undefined)
 
   return (
     <C
       {...props}
       {...(ss.length && { style: sty(...ss) })}
     />
-  );
-};
+  )
+}
 
-export default StylesStyled;
+export default StylesStyled

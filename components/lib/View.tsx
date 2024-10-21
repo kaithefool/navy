@@ -1,6 +1,6 @@
-import React from 'react';
-import { View as NativeView } from 'react-native';
-import Styles from '../../styles';
+import React from 'react'
+import { View as NativeView } from 'react-native'
+import Styles from '../../styles'
 
 const View = ({ ...props }) => {
   return (
@@ -8,7 +8,7 @@ const View = ({ ...props }) => {
       component={NativeView}
       {...props}
     />
-  );
-};
+  )
+}
 
-export default View;
+export default View

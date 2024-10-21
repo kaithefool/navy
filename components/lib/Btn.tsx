@@ -1,20 +1,22 @@
-import React, { ReactNode, useState, isValidElement } from 'react';
-import { Pressable } from 'react-native';
-import { useStyles } from '../../styles';
-import Text from './Text';
+import React, { ReactNode, useState, isValidElement } from 'react'
+import { Pressable } from 'react-native'
+import { useStyles } from '../../styles'
+import Text from './Text'
 
 const Btn = ({
   children,
   disabled = false,
+  color = 'primary',
   variant = 'filled',
   ...props
 }: {
-  children: ReactNode;
-  disabled?: boolean;
-  variant?: 'filled' | 'tonal' | 'outline';
+  children: ReactNode
+  disabled?: boolean
+  color: string
+  variant?: 'filled' | 'tonal' | 'outline'
 }) => {
-  const { sty } = useStyles();
-  const [pressed, setPressed] = useState<boolean>(false);
+  const { sty } = useStyles()
+  const [pressed, setPressed] = useState<boolean>(false)
 
   return (
     <Pressable
@@ -23,11 +25,13 @@ const Btn = ({
       onPressOut={() => setPressed(false)}
       {...props}
     >
-      {isValidElement(children) ? children : (
-        <Text sty="btn-outline-primary:text">{children}</Text>
-      )}
+      {isValidElement(children)
+        ? children
+        : (
+            <Text sty="btn-outline-primary:text">{children}</Text>
+          )}
     </Pressable>
-  );
-};
+  )
+}
 
-export default Btn;
+export default Btn

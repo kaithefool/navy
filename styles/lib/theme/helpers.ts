@@ -1,6 +1,6 @@
-import { Style, Styles } from './Theme';
+import { Style, Styles } from './Theme'
 
-export type StyleMap<T> = { [s: string]: T } | T[];
+export type StyleMap<T> = { [s: string]: T } | T[]
 
 export const mapStyles = <V>(
   /**
@@ -27,22 +27,22 @@ export const mapStyles = <V>(
   pseudo?: string,
 ): Styles => {
   const entries = Array.isArray(map)
-    ? map.map((v) => [v, v])
-    : Object.entries(map);
+    ? map.map(v => [v, v])
+    : Object.entries(map)
 
   return Object.fromEntries(
     entries.map(([k, v]) => {
-      let key = String(k);
-      if (prefix) key = `${prefix}-${key}`;
-      if (pseudo) key = `${key}:${pseudo}`;
+      let key = String(k)
+      if (prefix) key = `${prefix}-${key}`
+      if (pseudo) key = `${key}:${pseudo}`
 
-      return [key, fn(v, String(k))];
+      return [key, fn(v, String(k))]
     }),
-  );
-};
+  )
+}
 
 export const arrayToNumKeyObj = <T>(array: T[]) => {
-  return array.reduce<{ [n: number]: T; }>(
+  return array.reduce<{ [n: number]: T }>(
     (o, v, i) => ({ ...o, [i]: v }), {},
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react';
-import StylesProvider from './StylesProvider';
-import StylesNavTheme from './StylesNavTheme';
-import StylesStyled from './StylesStyled';
+import React, { ReactNode } from 'react'
+import StylesProvider from './StylesProvider'
+import StylesNavTheme from './StylesNavTheme'
+import StylesStyled from './StylesStyled'
 
 const Styles = ({ children }: { children: ReactNode }) => {
   return (
@@ -10,10 +10,10 @@ const Styles = ({ children }: { children: ReactNode }) => {
         {children}
       </StylesNavTheme>
     </StylesProvider>
-  );
-};
+  )
+}
 
-Styles.NavTheme = StylesNavTheme;
-Styles.Styled = StylesStyled;
+Styles.NavTheme = StylesNavTheme
+Styles.Styled = StylesStyled
 
-export default Styles;
+export default Styles

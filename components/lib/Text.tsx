@@ -1,6 +1,6 @@
-import React from 'react';
-import { Text as NativeText } from 'react-native';
-import Styles from '../../styles';
+import React from 'react'
+import { Text as NativeText } from 'react-native'
+import Styles from '../../styles'
 
 const Text = ({ ...props }) => {
   return (
@@ -9,7 +9,7 @@ const Text = ({ ...props }) => {
       defaultSty="text"
       {...props}
     />
-  );
-};
+  )
+}
 
-export default Text;
+export default Text
