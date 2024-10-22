@@ -1,5 +1,5 @@
 import React, { ReactNode, useState, isValidElement } from 'react'
-import { Pressable } from 'react-native'
+import { GestureResponderEvent, Pressable } from 'react-native'
 import { Sty, Theme, useStyles } from '../../styles'
 import Text from './Text'
 
@@ -24,9 +24,9 @@ const Btn = ({
   variant?: 'filled' | 'tonal' | 'outline'
   size?: keyof Theme.ThemeConfig['btnSizes']
 
-  onPress?: () => void
-  onPressIn?: () => void
-  onPressOut?: () => void
+  onPress?: (e: GestureResponderEvent) => void
+  onPressIn?: (e: GestureResponderEvent) => void
+  onPressOut?: (e: GestureResponderEvent) => void
 }) => {
   const { sty, theme } = useStyles()
   const [pressed, setPressed] = useState<boolean>(false)
@@ -40,15 +40,26 @@ const Btn = ({
         ${disabled && { opacity: 0.65 }}
         ${btnSty}
       `}
-      onPress={() => !disabled && onPress()}
-      onPressIn={() => !disabled && setPressed(true) && onPressIn()}
-      onPressOut={() => !disabled && setPressed(true) && onPressOut()}
+      onPress={e => !disabled && onPress(e)}
+      onPressIn={(e) => {
+        if (!disabled) {
+          setPressed(true)
+          onPressIn(e)
+        }
+      }}
+      onPressOut={(e) => {
+        if (!disabled) {
+          setPressed(false)
+          onPressOut(e)
+        }
+      }}
       {...props}
     >
       {isValidElement(children)
         ? children
         : (
             <Text sty={sty`
+              text-center
               text-${color}:contrast fw-bold ${textSty}
             `}
             >

@@ -61,14 +61,27 @@ export type ThemeOpts = {
     lg: ViewStyle
   }
   btnRadius?: number
+  textInputSizes?: {
+    sm: ViewStyle
+    md: ViewStyle
+    lg: ViewStyle
+  }
+  textInputRadius?: number
 }
 
 export type ThemeConfig = Required<ThemeOpts> & {
   fontSizes: Required<Exclude<ThemeOpts['fontSizes'], undefined>>
   btnSizes: Required<Exclude<ThemeOpts['btnSizes'], undefined>>
+  textInputSizes: Required<Exclude<ThemeOpts['textInputSizes'], undefined>>
 }
 
 const defaultBtnSizes = {
+  sm: { y: 0.25, x: 0.5 },
+  md: { y: 0.375, x: 0.75 },
+  lg: { y: 0.5, x: 1 },
+} as const
+
+const defaultTextInputSizes = {
   sm: { y: 0.25, x: 0.5 },
   md: { y: 0.375, x: 0.75 },
   lg: { y: 0.5, x: 1 },
@@ -126,12 +139,22 @@ export default class Theme {
       })),
     }
     const btnRadius = opts.btnRadius ?? preConfig.borderRadius[3]
+    const textInputSizes = {
+      ...opts.textInputSizes,
+      ...mapValues(defaultTextInputSizes, ({ x, y }): ViewStyle => ({
+        paddingHorizontal: x * preConfig.spacer,
+        paddingVertical: y * preConfig.spacer,
+      })),
+    }
+    const textInputRadius = opts.textInputRadius ?? preConfig.borderRadius[3]
 
     this.config = {
       ...preConfig,
       spacers,
       btnSizes,
       btnRadius,
+      textInputSizes,
+      textInputRadius,
     }
 
     this.styles = {

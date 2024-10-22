@@ -4,7 +4,7 @@ import { Sty, useStyles } from '../../styles'
 
 const View = ({
   sty: styles, ...props
-}: { sty: Sty | Sty[] } & ViewProps) => {
+}: { sty?: Sty | Sty[] } & ViewProps) => {
   const { sty } = useStyles()
 
   return (

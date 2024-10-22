@@ -1,18 +1,14 @@
 import React from 'react'
-import { TextInput, View } from 'react-native'
-import { useStyles } from '../styles'
-import { Btn } from './lib'
+import { Btn, View, TextInput, Text } from './lib'
 
 const FormLogin = () => {
-  const { sty } = useStyles()
-
   return (
-    <View style={sty`
-      row align-items-center justify-content-center h-100
-    `}
-    >
-      <View>
-        <TextInput style={sty`border-1 rounded-2 mb-3 ${{ height: 25 }}`} />
+    <View sty="row align-items-center justify-content-center h-100">
+      <View sty="w-100 p-3">
+        <Text sty="fw-bold mb-1 fs-sm">Account</Text>
+        <TextInput sty="mb-2" />
+        <Text sty="fw-bold mb-1 fs-sm">Password</Text>
+        <TextInput sty="mb-2" secureTextEntry />
         <Btn disabled>Login</Btn>
       </View>
     </View>
