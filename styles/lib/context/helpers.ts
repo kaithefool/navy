@@ -1,9 +1,9 @@
 import Theme, { Style } from '../theme'
 
-export type StyParam = string | Style
+export type Sty = string | Style | false | undefined
 
-export type StyParams = StyParam[]
-  | [TemplateStringsArray, ...StyParam[]]
+export type Stys = (Sty | Sty[])[]
+  | [TemplateStringsArray, ...(Sty | Sty[])[]]
 
 type TagFunctionParams<T> = [
   TemplateStringsArray, ...T[],
@@ -21,15 +21,16 @@ const isTagFunctionParams = <T>(p: unknown[]): p is TagFunctionParams<T> => {
 
 export const composeStyles = (
   theme: Theme,
-  ...styles: StyParam[]
+  ...styles: Sty[]
 ) => {
   const seq = styles
-    .map((s): string[] | Style => (
+    .map((s): string[] | Style | false | undefined => (
       typeof s === 'string'
         ? s.split(/\s/).map(n => n.trim()).filter(n => n)
         : s
     ))
     .flat()
+    .filter(s => s)
     .map((s) => {
       if (typeof s === 'string') return theme.styles[s] ?? {}
       return s
@@ -42,35 +43,36 @@ export const composeStyles = (
 
 export const sty = (
   theme: Theme,
-  ...styles: StyParams
+  ...styles: Stys
 ) => {
-  let ss: StyParam[]
+  let ss: Sty[]
 
   if (isTagFunctionParams(styles)) {
     const [tmpl, ...p] = styles
 
     ss = tmpl
       // weave tmpl string and values
-      .flatMap<string | Style>((t, i) => [t, p[i]])
+      .flatMap<Sty | Sty[]>((t, i) => [t, p[i]])
+      // flatten nested arrays
+      .flat()
       // join all adjacent strings
-      .reduce<(string | Style)[]>((acc, cur) => {
-      const last = acc.slice(-1)[0]
+      .reduce<Sty[]>((acc, cur) => {
+        const last = acc.slice(-1)[0]
 
-      if (typeof cur === 'string' && typeof last === 'string') {
-        return [...acc.slice(0, -1), `${last}${cur}`]
-      }
+        if (typeof cur === 'string' && typeof last === 'string') {
+          return [...acc.slice(0, -1), `${last}${cur}`]
+        }
 
-      return [...acc, cur]
-    }, [])
-      .filter(s => s)
+        return [...acc, cur]
+      }, [])
   }
   else {
-    ss = styles
+    ss = styles.flat()
   }
 
   return composeStyles(theme, ...ss)
 }
 
 export const styWithTheme = (theme: Theme) => {
-  return (...args: StyParams) => sty(theme, ...args)
+  return (...args: Stys) => sty(theme, ...args)
 }

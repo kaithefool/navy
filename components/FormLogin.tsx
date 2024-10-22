@@ -1,8 +1,7 @@
 import React from 'react'
-import { Pressable, TextInput, View } from 'react-native'
+import { TextInput, View } from 'react-native'
 import { useStyles } from '../styles'
-import Text from './lib/Text'
-import Btn from './lib/Btn'
+import { Btn } from './lib'
 
 const FormLogin = () => {
   const { sty } = useStyles()
@@ -13,8 +12,8 @@ const FormLogin = () => {
     `}
     >
       <View>
-        <TextInput style={sty`border-1 rounded-2 ${{ height: 25 }}`} />
-        <Btn>Login</Btn>
+        <TextInput style={sty`border-1 rounded-2 mb-3 ${{ height: 25 }}`} />
+        <Btn disabled>Login</Btn>
       </View>
     </View>
   )

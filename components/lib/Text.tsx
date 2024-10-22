@@ -1,13 +1,16 @@
 import React from 'react'
-import { Text as NativeText } from 'react-native'
-import Styles from '../../styles'
+import { Text as NativeText, TextProps } from 'react-native'
+import { Sty, useStyles } from '../../styles'
 
-const Text = ({ ...props }) => {
+const Text = ({
+  sty: styles, ...props
+}: { sty?: Sty | Sty[] } & TextProps) => {
+  const { sty } = useStyles()
+
   return (
-    <Styles.Styled
-      component={NativeText}
-      defaultSty="text"
+    <NativeText
       {...props}
+      style={sty`text ${styles}`}
     />
   )
 }

@@ -1,3 +1,4 @@
+import mapValues from 'lodash/mapValues'
 import { Theme as NavTheme } from '@react-navigation/native'
 import { ImageStyle, TextStyle, ViewStyle, DimensionValue } from 'react-native'
 
@@ -54,12 +55,24 @@ export type ThemeOpts = {
   }
   body?: StyTextStyle
   headings?: StyTextStyle
+  btnSizes?: {
+    sm: ViewStyle
+    md: ViewStyle
+    lg: ViewStyle
+  }
+  btnRadius?: number
 }
 
 export type ThemeConfig = Required<ThemeOpts> & {
   fontSizes: Required<Exclude<ThemeOpts['fontSizes'], undefined>>
-  // btns: Required<Exclude<ThemeOpts['btns'], undefined>>;
+  btnSizes: Required<Exclude<ThemeOpts['btnSizes'], undefined>>
 }
+
+const defaultBtnSizes = {
+  sm: { y: 0.25, x: 0.5 },
+  md: { y: 0.375, x: 0.75 },
+  lg: { y: 0.5, x: 1 },
+} as const
 
 export default class Theme {
   readonly config: ThemeConfig
@@ -70,7 +83,7 @@ export default class Theme {
     const preConfig = {
       nav: opts.nav,
       palette: opts.palette,
-      spacer: opts.spacer ?? 16,
+      spacer: opts.spacer ?? 24,
       dimensions: opts.dimensions ?? {
         auto: 'auto',
         0: '0%',
@@ -80,7 +93,7 @@ export default class Theme {
         100: '100%',
       },
       borderWidths: opts.borderWidths ?? [0, 1, 2, 3, 4, 5],
-      borderRadius: opts.borderRadius ?? [0, 1, 2, 3, 4, 5],
+      borderRadius: opts.borderRadius ?? [0, 2, 4, 6, 8, 10],
       fontFamilies: opts.fontFamilies,
       fontWeights: opts.fontWeights ?? ['normal'],
       fontStyles: opts.fontStyles ?? ['italic'],
@@ -105,10 +118,20 @@ export default class Theme {
     // computed defaults
     const spacers = opts.spacers ?? [0, 0.25, 0.5, 1, 1.5, 3]
       .map(v => preConfig.spacer * v)
+    const btnSizes = {
+      ...opts.btnSizes,
+      ...mapValues(defaultBtnSizes, ({ x, y }): ViewStyle => ({
+        paddingHorizontal: x * preConfig.spacer,
+        paddingVertical: y * preConfig.spacer,
+      })),
+    }
+    const btnRadius = opts.btnRadius ?? preConfig.borderRadius[3]
 
     this.config = {
       ...preConfig,
       spacers,
+      btnSizes,
+      btnRadius,
     }
 
     this.styles = {

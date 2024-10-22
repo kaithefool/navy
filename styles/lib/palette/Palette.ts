@@ -22,11 +22,12 @@ export default class Palette {
 
   highlights: Colors
   contrasts: Colors
+  // tones: Colors
 
   constructor({
     themes, grays, components = {},
     invert = false,
-    highlight = 2,
+    highlight = 0.2,
   }: {
     themes: {
       primary: string | { color: string } & VariantsOpts
@@ -35,9 +36,9 @@ export default class Palette {
     grays?: GrayscaleOpts
     components?: { body?: string, text?: string }
     invert?: boolean
+
     highlight?: number
     contrastRatio?: number
-
   }) {
     this.themes = Object.assign({},
       ...Object.entries(themes).map(([k, v]) => {

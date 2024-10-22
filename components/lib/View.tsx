@@ -1,12 +1,16 @@
 import React from 'react'
-import { View as NativeView } from 'react-native'
-import Styles from '../../styles'
+import { View as NativeView, ViewProps } from 'react-native'
+import { Sty, useStyles } from '../../styles'
 
-const View = ({ ...props }) => {
+const View = ({
+  sty: styles, ...props
+}: { sty: Sty | Sty[] } & ViewProps) => {
+  const { sty } = useStyles()
+
   return (
-    <Styles.Styled
-      component={NativeView}
+    <NativeView
       {...props}
+      style={sty(styles)}
     />
   )
 }
