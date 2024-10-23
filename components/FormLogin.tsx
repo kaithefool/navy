@@ -1,5 +1,5 @@
 import React from 'react'
-import { Btn, View, TextInput, Text } from './lib/base'
+import { View, Text } from './lib/base'
 import Form from './lib/form'
 
 const FormLogin = () => {
@@ -13,10 +13,10 @@ const FormLogin = () => {
           }}
         >
           <Text sty="fw-bold mb-1 fs-sm">Account</Text>
-          <Form.TextInput name="account" sty="mb-2" />
+          <Form.InputText name="account" sty="mb-2" autoCapitalize="none" />
           <Text sty="fw-bold mb-1 fs-sm">Password</Text>
-          <TextInput sty="mb-2" secureTextEntry />
-          <Btn>Login</Btn>
+          <Form.InputText name="password" sty="mb-2" secureTextEntry />
+          <Form.BtnSubmit>Login</Form.BtnSubmit>
         </Form>
       </View>
     </View>

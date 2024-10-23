@@ -5,7 +5,7 @@ import {
   TextInput as NativeTextInput,
   TextInputProps,
 } from 'react-native'
-import { Sty, Theme, useStyles } from '../../styles'
+import { Sty, Theme, useStyles } from '../../../styles'
 
 const TextInput = ({
   sty: styles,

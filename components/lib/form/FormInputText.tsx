@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ComponentProps } from 'react'
 import useForm from './useForm'
 import { TextInput } from '../base'
 
@@ -7,7 +7,7 @@ const FormInputText = ({
   ...props
 }: {
   name: string
-}) => {
+} & ComponentProps<typeof TextInput>) => {
   const { handleChange, handleBlur } = useForm()
 
   return (

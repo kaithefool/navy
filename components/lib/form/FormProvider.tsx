@@ -12,8 +12,8 @@ const FormProvider = <V extends FormikValues>({
   ...props
 }: {
   children: ReactNode | ((
+    formikProps: FormikProps<V>,
     formProps: FormContextType,
-    formikProps: FormikProps<V>
   ) => ReactNode)
   schema?: Schema
   disabled?: boolean
@@ -25,6 +25,7 @@ const FormProvider = <V extends FormikValues>({
   }
 
   const submitHandler = () => {
+    console.log('submit')
   }
 
   return (
@@ -38,7 +39,7 @@ const FormProvider = <V extends FormikValues>({
         <FormContext.Provider value={value}>
           {
             typeof children === 'function'
-              ? children(value, formikProps)
+              ? children(formikProps, value)
               : children
           }
         </FormContext.Provider>
