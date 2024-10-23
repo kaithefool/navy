@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text as NativeText, TextProps } from 'react-native'
-import { Sty, useStyles } from '../../styles'
+import { Sty, useStyles } from '../../../styles'
 
 const Text = ({
   sty: styles, ...props

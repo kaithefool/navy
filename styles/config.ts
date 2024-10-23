@@ -42,7 +42,7 @@ const makeTheme = (name: ThemeName) => {
     fontWeights: { normal: 400, bold: 600 },
     body: {
       fontFamily: 'noto-sans',
-      letterSpacing: 1.2,
+      letterSpacing: 0.6,
     },
     headings: { fontWeight: 'bold' },
   })

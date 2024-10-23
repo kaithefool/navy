@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, isValidElement } from 'react'
 import { GestureResponderEvent, Pressable } from 'react-native'
-import { Sty, Theme, useStyles } from '../../styles'
+import { Sty, Theme, useStyles } from '../../../styles'
 import Text from './Text'
 
 const Btn = ({
@@ -16,7 +16,7 @@ const Btn = ({
   onPressOut = () => {},
   ...props
 }: {
-  children: ReactNode
+  children?: ReactNode
   sty?: Sty | Sty[]
   textSty?: Sty | Sty[]
   disabled?: boolean

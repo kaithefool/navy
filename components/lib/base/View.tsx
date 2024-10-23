@@ -1,6 +1,6 @@
 import React from 'react'
 import { View as NativeView, ViewProps } from 'react-native'
-import { Sty, useStyles } from '../../styles'
+import { Sty, useStyles } from '../../../styles'
 
 const View = ({
   sty: styles, ...props
