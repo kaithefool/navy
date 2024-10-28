@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react'
+import React, { ComponentProps, ReactNode } from 'react'
 import FormContext, { FormContextType } from './FormContext'
-import { Formik, FormikProps, FormikValues } from 'formik'
+import { Formik, FormikConfig, FormikProps, FormikValues } from 'formik'
 import { Schema } from 'yup'
 
 const FormProvider = <V extends FormikValues>({
@@ -9,6 +9,7 @@ const FormProvider = <V extends FormikValues>({
   disabled = false,
   defaults,
   stored,
+  onSubmit,
   ...props
 }: {
   children: ReactNode | ((
@@ -19,20 +20,19 @@ const FormProvider = <V extends FormikValues>({
   disabled?: boolean
   defaults: V
   stored?: object
+  onSubmit?: FormikConfig<V>['onSubmit']
 }) => {
   const value: FormContextType = {
     disabled,
-  }
-
-  const submitHandler = () => {
-    console.log('submit')
   }
 
   return (
     <Formik
       validationSchema={schema}
       initialValues={defaults}
-      onSubmit={submitHandler}
+      onSubmit={onSubmit ?? (async (values) => {
+
+      })}
       {...props}
     >
       {formikProps => (

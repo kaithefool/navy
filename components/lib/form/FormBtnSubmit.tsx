@@ -3,9 +3,7 @@ import useForm from './useForm'
 import { Btn } from '../base'
 
 const FormBtnSubmit = (props: ComponentProps<typeof Btn>) => {
-  const { handleSubmit, values } = useForm()
-
-  console.log(values)
+  const { handleSubmit } = useForm()
 
   return (
     <Btn
