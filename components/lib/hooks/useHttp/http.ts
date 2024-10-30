@@ -33,8 +33,17 @@ export type HttpState = HttpPendingState | HttpErrorState | HttpSuccessState
 
 export type HttpResponse = HttpErrorState | HttpSuccessState
 
-export type HttpPromise = Promise<HttpResponse> & {
-  abort: () => void
+export class HttpPromise extends Promise<HttpResponse> {
+  constructor(
+    private readonly requestFn: () => Promise<HttpResponse>,
+    private readonly abortController: AbortController,
+  ) {
+    super(resolve => resolve(requestFn()))
+  }
+
+  abort() {
+    this.abortController.abort()
+  }
 }
 
 export default function http({
@@ -44,7 +53,8 @@ export default function http({
   ...rest
 }: HttpRequest): HttpPromise {
   const abortCtrl = new AbortController()
-  const promise = (async () => {
+
+  return new HttpPromise(async () => {
     let res: Response | undefined
     let payload: HttpResponse['payload']
 
@@ -79,9 +89,5 @@ export default function http({
 
       return r
     }
-  })()
-
-  promise.abort = () => abortCtrl.abort()
-
-  return promise
+  }, abortCtrl)
 }

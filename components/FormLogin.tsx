@@ -15,7 +15,7 @@ const FormLogin = () => {
           }}
           defaults={{
             email: 'admin@d.com',
-            password: '',
+            password: '123$5^7*(0',
           }}
           onSubmitted={res => console.log(res)}
         >
