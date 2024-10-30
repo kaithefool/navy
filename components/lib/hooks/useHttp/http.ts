@@ -1,52 +1,21 @@
-export class HttpError {
-  readonly type?: number | 'NETWORK' | 'PARSER'
-  readonly cause?: unknown
-
-  constructor(input: unknown) {
-    this.cause = input
-
-    if (input && typeof input === 'object') {
-      if (
-        'cause' in input && input.cause && typeof input.cause === 'object'
-        && 'code' in input.cause
-      ) {
-        const { code } = input.cause
-        if (code === 'ECONNREFUSED') {
-          this.type = 'NETWORK'
-        }
-      }
-
-      if (input instanceof Response && !input.ok) {
-        this.type = input.status
-      }
-
-      if (input instanceof SyntaxError) {
-        this.type = 'PARSER'
-      }
-    }
-
-    if (!this.type) {
-      throw input
-    }
-  }
-}
+import HttpError from './HttpError'
 
 type ResponseTypes = 'arrayBuffer' | 'blob' | 'json' | 'text' | 'formData'
 
-export type HttpPendingResponse = {
+export type HttpPendingState = {
   status: 'pending'
   raw?: Response
   progress: number
 }
 
-export type HttpSuccessResponse = {
+export type HttpSuccessState = {
   status: 'success'
   raw: Response
   payload?: Awaited<ReturnType<Response[ResponseTypes]>>
   progress: 1
 }
 
-export type HttpErrorResponse = {
+export type HttpErrorState = {
   status: 'error'
   raw?: Response
   payload?: Awaited<ReturnType<Response[ResponseTypes]>>
@@ -57,12 +26,12 @@ export type HttpErrorResponse = {
 export type HttpRequest = RequestInit & {
   url: string | URL
   responseType?: ResponseTypes
-  onProgress?: (res: HttpPendingResponse) => void
+  onProgress?: (res: HttpPendingState) => void
 }
 
-export type HttpStatus = HttpPendingResponse | HttpErrorResponse | HttpSuccessResponse
+export type HttpState = HttpPendingState | HttpErrorState | HttpSuccessState
 
-export type HttpResponse = HttpErrorResponse | HttpSuccessResponse
+export type HttpResponse = HttpErrorState | HttpSuccessState
 
 export type HttpPromise = Promise<HttpResponse> & {
   abort: () => void
@@ -70,8 +39,8 @@ export type HttpPromise = Promise<HttpResponse> & {
 
 export default function http({
   url,
+  requestType = 'json',
   responseType = 'json',
-  onProgress,
   ...rest
 }: HttpRequest): HttpPromise {
   const abortCtrl = new AbortController()
@@ -88,11 +57,9 @@ export default function http({
       payload = await res[responseType]()
 
       // if status code isn't within the 2xx range
-      if (!res.ok) {
-        throw res
-      }
+      if (!res.ok) throw res
 
-      const r: HttpSuccessResponse = {
+      const r: HttpSuccessState = {
         status: 'success',
         raw: res,
         payload,
@@ -102,10 +69,11 @@ export default function http({
       return r
     }
     catch (e) {
-      const r: HttpErrorResponse = {
+      const r: HttpErrorState = {
         status: 'error',
         raw: res,
         error: new HttpError(e),
+        payload,
         progress: 0,
       }
 
@@ -113,8 +81,7 @@ export default function http({
     }
   })()
 
-  return {
-    ...promise,
-    abort: () => abortCtrl.abort(),
-  }
+  promise.abort = () => abortCtrl.abort()
+
+  return promise
 }

@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik'
 
 export default function useForm() {
   return {
-    ...useContext(FormContext),
     ...useFormikContext(),
+    ...useContext(FormContext),
   }
 }

@@ -8,12 +8,14 @@ const FormInputText = ({
 }: {
   name: string
 } & ComponentProps<typeof TextInput>) => {
-  const { handleChange, handleBlur } = useForm()
+  const { handleChange, handleBlur, getFieldMeta } = useForm()
+  const { value } = getFieldMeta<string>(name)
 
   return (
     <TextInput
       onChangeText={handleChange(name)}
       onBlur={handleBlur(name)}
+      value={value}
       {...props}
     />
   )

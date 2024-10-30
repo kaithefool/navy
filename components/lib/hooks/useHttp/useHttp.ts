@@ -2,18 +2,20 @@ import { useState, useRef, useEffect } from 'react'
 import http, {
   HttpPromise,
   HttpRequest,
-  HttpStatus,
-  HttpSuccessResponse,
+  HttpResponse,
+  HttpState,
+  HttpSuccessState,
 } from './http'
 import useComparable from '../useComparable'
 
-export default function useHttp(request: HttpRequest) {
-  const [res, setRes] = useState<HttpStatus>({
+export default function useHttp(request?: HttpRequest) {
+  const [state, setState] = useState<HttpState>({
     status: 'pending',
     progress: 0,
   })
   const promise = useRef<HttpPromise>()
-  const fetched = useRef<HttpSuccessResponse>()
+  const fetched = useRef<HttpSuccessState>()
+  const res = useRef<HttpResponse>()
   const req = async (rq: HttpRequest) => {
     const p = http(rq)
     promise.current = p
@@ -22,8 +24,10 @@ export default function useHttp(request: HttpRequest) {
     if (rs.status === 'success') {
       fetched.current = rs
     }
+    res.current = rs
+    setState(rs)
 
-    setRes(rs)
+    return rs
   }
 
   useEffect(() => {
@@ -31,13 +35,16 @@ export default function useHttp(request: HttpRequest) {
     if (request) req(request)
 
     // prevent memory leak
-    return () => promise.current?.abort()
+    return () => {
+      promise.current?.abort()
+    }
   }, [useComparable(request)])
 
   return {
     req,
-    res,
-    fetched,
+    res: res.current,
+    state,
+    fetched: fetched.current,
     abort: () => promise.current?.abort(),
   }
 }

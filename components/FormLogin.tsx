@@ -7,13 +7,26 @@ const FormLogin = () => {
     <View sty="row align-items-center justify-content-center h-100">
       <View sty="w-100 p-3">
         <Form
-          defaults={{
-            account: '',
-            passowrd: '',
+          api={{
+            url: 'http://localhost:3000/api/a/auth',
+            headers: new Headers({
+              'content-type': 'application/json',
+            }),
           }}
+          defaults={{
+            email: 'admin@d.com',
+            password: '',
+          }}
+          onSubmitted={res => console.log(res)}
         >
-          <Text sty="fw-bold mb-1 fs-sm">Account</Text>
-          <Form.InputText name="account" sty="mb-2" autoCapitalize="none" />
+          <Text sty="fw-bold mb-1 fs-sm">Email</Text>
+          <Form.InputText
+            name="email"
+            sty="mb-2"
+            autoCapitalize="none"
+            keyboardType="email-address"
+            autoComplete="email"
+          />
           <Text sty="fw-bold mb-1 fs-sm">Password</Text>
           <Form.InputText name="password" sty="mb-2" secureTextEntry />
           <Form.BtnSubmit>Login</Form.BtnSubmit>
