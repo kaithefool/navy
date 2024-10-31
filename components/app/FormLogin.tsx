@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text } from './lib/base'
-import Form from './lib/form'
+import { View, Text } from '../lib/base'
+import Form from '../lib/form'
 
 const FormLogin = () => {
   return (

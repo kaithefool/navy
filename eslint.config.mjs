@@ -4,8 +4,13 @@ import stylistic from '@stylistic/eslint-plugin'
 export default [
   ...ts.configs.recommended,
   stylistic.configs.customize({
-    'max-len': { code: 100 },
-    'object-curly-newline': { consistent: true },
-    'function-paren-newline': 'consistent',
   }),
+  {
+    rules: {
+      '@stylistic/max-len': ['warn', { code: 100 }],
+      '@stylistic/function-paren-newline': ['error', 'consistent'],
+      '@stylistic/object-curly-newline': ['error', { consistent: true }],
+      'no-duplicate-imports': ['error'],
+    },
+  },
 ]

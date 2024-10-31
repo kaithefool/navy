@@ -45,8 +45,7 @@ export default class Palette {
         const color = typeof v === 'string' ? v : v.color
 
         return variants(k, color, { invert, ...typeof v !== 'string' && v })
-      }),
-    )
+      }))
     this.grays = grayscale({
       invert,
       hue: chroma(this.themes.primary).hsl()[0],
