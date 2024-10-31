@@ -1,3 +1,4 @@
+import qs from 'qs'
 import HttpError from './HttpError'
 
 type ResponseTypes = 'arrayBuffer' | 'blob' | 'json' | 'text' | 'formData'
@@ -23,8 +24,15 @@ export type HttpErrorState = {
   progress: number
 }
 
+const contentTypes = {
+  json: 'application/json',
+  text: 'text/plain',
+} as const
+
 export type HttpRequest = RequestInit & {
   url: string | URL
+  query?: object
+  requestType?: keyof typeof contentTypes
   responseType?: ResponseTypes
   onProgress?: (res: HttpPendingState) => void
 }
@@ -35,7 +43,7 @@ export type HttpResponse = HttpErrorState | HttpSuccessState
 
 export class HttpPromise extends Promise<HttpResponse> {
   constructor(
-    private readonly requestFn: () => Promise<HttpResponse>,
+    requestFn: () => Promise<HttpResponse>,
     private readonly abortController: AbortController,
   ) {
     super(resolve => resolve(requestFn()))
@@ -46,8 +54,48 @@ export class HttpPromise extends Promise<HttpResponse> {
   }
 }
 
+const mergeQueries = (
+  url: string | URL,
+  query: object = {},
+): URL => {
+  const u = url instanceof URL ? url : new URL(url)
+
+  return new URL(
+    `${u.origin}${u.pathname}${qs.stringify({
+      ...qs.parse(u.search, { ignoreQueryPrefix: true }),
+      ...query,
+    }, { addQueryPrefix: true })}${u.hash}`,
+  )
+}
+
+mergeQueries('https://localhost:3000', { u: 'admin' })
+
+const mergeHeaders = (...hArgs: (HeadersInit | undefined)[]): Headers => {
+  const hs = hArgs.map((h) => {
+    if (!h) return {}
+    if (h instanceof Headers) {
+      const o: { [s: string]: string } = {}
+
+      h.forEach((value: string, key: string) => {
+        o[key] = value
+      })
+
+      return o
+    }
+    if (Array.isArray(h)) {
+      return Object.fromEntries(h)
+    }
+
+    return h
+  })
+
+  return new Headers(Object.assign({}, ...hs))
+}
+
 export default function http({
   url,
+  query,
+  headers,
   requestType = 'json',
   responseType = 'json',
   ...rest
@@ -59,8 +107,12 @@ export default function http({
     let payload: HttpResponse['payload']
 
     try {
-      res = await fetch(url, {
+      res = await fetch(mergeQueries(url, query), {
         ...rest,
+        headers: mergeHeaders(
+          { 'content-type': contentTypes[requestType] },
+          headers,
+        ),
         signal: abortCtrl.signal,
       })
 

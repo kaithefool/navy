@@ -9,9 +9,6 @@ const FormLogin = () => {
         <Form
           api={{
             url: 'http://localhost:3000/api/a/auth',
-            headers: new Headers({
-              'content-type': 'application/json',
-            }),
           }}
           defaults={{
             email: 'admin@d.com',
