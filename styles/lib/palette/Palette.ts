@@ -8,12 +8,12 @@ export type Colors = {
   [s: string]: string
 }
 
-type ComponentColors = {
+export type ComponentColors = {
   body: string
   text: string
 }
 
-export default class Palette {
+export class Palette {
   colors: Colors & ComponentColors
 
   themes: Colors
