@@ -1,16 +1,14 @@
 import 'expo-dev-client'
 import React, { useEffect } from 'react'
 import { Slot, SplashScreen } from 'expo-router'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { KeyboardProvider, KeyboardAvoidingView } from 'react-native-keyboard-controller'
 import {
   useFonts,
   NotoSans_400Regular,
   NotoSans_600SemiBold,
 } from '@expo-google-fonts/noto-sans'
 
-import Styles from '../styles'
-import Config from '../components/lib/context/config'
+import Styles from '@/styles'
+import Config from '@/components/lib/context/config'
 
 // Prevents SplashScreen from auto hiding while the fonts are loaded.
 SplashScreen.preventAutoHideAsync()
@@ -34,13 +32,7 @@ export default function RootLayout() {
   return (
     <Config>
       <Styles>
-        <KeyboardProvider>
-          <SafeAreaView>
-            <KeyboardAvoidingView>
-              <Slot />
-            </KeyboardAvoidingView>
-          </SafeAreaView>
-        </KeyboardProvider>
+        <Slot />
       </Styles>
     </Config>
   )

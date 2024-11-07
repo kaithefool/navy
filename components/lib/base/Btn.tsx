@@ -1,14 +1,19 @@
 import React, { ReactNode, useState, isValidElement } from 'react'
 import { GestureResponderEvent, Pressable } from 'react-native'
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+
 import { Sty, Theme, useStyles } from '../../../styles'
 import Text from './Text'
+import { FontAwesomeIcon as FA } from '@fortawesome/react-native-fontawesome'
+import { faD } from '@fortawesome/free-solid-svg-icons'
 
 const Btn = ({
   children,
   sty: btnSty,
   textSty,
   disabled = false,
-  color = 'primary',
+  color = 'gray-200',
+  icon,
   variant = 'filled',
   size = 'md',
   onPress = () => {},
@@ -22,6 +27,7 @@ const Btn = ({
   disabled?: boolean
   color?: string
   variant?: 'filled' | 'tonal' | 'outline'
+  icon?: IconDefinition
   size?: keyof Theme.ThemeConfig['btnSizes']
 
   onPress?: (e: GestureResponderEvent) => void
@@ -32,9 +38,19 @@ const Btn = ({
   const [pressed, setPressed] = useState<boolean>(false)
   const { btnSizes, btnRadius } = theme.config
 
+  const a = sty`
+  row align-items-center justify-content-center gap-2
+  bg-${color}${pressed && ':highlight'}
+  ${btnSizes[size]} ${{ borderRadius: btnRadius }}
+  ${disabled && { opacity: 0.65 }}
+`
+
+  sty({ overflow: 'scroll' })
+
   return (
     <Pressable
       style={sty`
+        row align-items-center justify-content-center gap-2
         bg-${color}${pressed && ':highlight'}
         ${btnSizes[size]} ${{ borderRadius: btnRadius }}
         ${disabled && { opacity: 0.65 }}
@@ -55,14 +71,16 @@ const Btn = ({
       }}
       {...props}
     >
+      {icon && (
+        <FA
+          icon={icon}
+          style={sty`text-${color}:contrast`}
+        />
+      )}
       {isValidElement(children)
         ? children
         : (
-            <Text sty={sty`
-              text-center
-              text-${color}:contrast fw-bold ${textSty}
-            `}
-            >
+            <Text sty={sty`text-${color}:contrast fw-bold ${textSty}`}>
               {children}
             </Text>
           )}

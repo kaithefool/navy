@@ -1,12 +1,15 @@
 import React from 'react'
-import { View } from 'react-native'
 
-import FormLogin from '../components/app/FormLogin'
+import { Centered } from '@/components/lib/base'
+import FormLogin from '@/components/app/FormLogin'
+import { router } from 'expo-router'
 
 export default function Home() {
   return (
-    <View>
-      <FormLogin />
-    </View>
+    <Centered sty="p-3">
+      <FormLogin
+        onLoggedIn={() => router.navigate('/protected')}
+      />
+    </Centered>
   )
 }
