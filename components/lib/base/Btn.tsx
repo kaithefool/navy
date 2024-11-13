@@ -4,8 +4,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
 import { Sty, Theme, useStyles } from '../../../styles'
 import Text from './Text'
-import { FontAwesomeIcon as FA } from '@fortawesome/react-native-fontawesome'
-import { faD } from '@fortawesome/free-solid-svg-icons'
+import FA from './FA'
 
 const Btn = ({
   children,
@@ -38,15 +37,6 @@ const Btn = ({
   const [pressed, setPressed] = useState<boolean>(false)
   const { btnSizes, btnRadius } = theme.config
 
-  const a = sty`
-  row align-items-center justify-content-center gap-2
-  bg-${color}${pressed && ':highlight'}
-  ${btnSizes[size]} ${{ borderRadius: btnRadius }}
-  ${disabled && { opacity: 0.65 }}
-`
-
-  sty({ overflow: 'scroll' })
-
   return (
     <Pressable
       style={sty`
@@ -74,7 +64,7 @@ const Btn = ({
       {icon && (
         <FA
           icon={icon}
-          style={sty`text-${color}:contrast`}
+          sty={`text-${color}:contrast`}
         />
       )}
       {isValidElement(children)

@@ -15,7 +15,7 @@ const isTemplateStringsArray = (a: unknown): a is TemplateStringsArray => {
     && 'raw' in a
 }
 
-const isTagFunctionParams = <T>(p: unknown[]): p is TagFunctionParams<T> => {
+export const isTagFunctionParams = <T>(p: unknown[]): p is TagFunctionParams<T> => {
   return isTemplateStringsArray(p[0])
 }
 
