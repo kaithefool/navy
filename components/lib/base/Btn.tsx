@@ -11,7 +11,7 @@ const Btn = ({
   sty: btnSty,
   textSty,
   disabled = false,
-  color = 'gray-200',
+  color = 'gray-100',
   icon,
   variant = 'filled',
   size = 'md',
@@ -36,12 +36,28 @@ const Btn = ({
   const { sty, theme } = useStyles()
   const [pressed, setPressed] = useState<boolean>(false)
   const { btnSizes, btnRadius } = theme.config
+  let bg = '', tx = ''
+
+  switch (variant) {
+    case 'filled':
+      bg = `bg-${color}${pressed ? ':highlight' : ''}`
+      tx = `text-${color}:contrast`
+      break
+    case 'outline':
+      bg = `border-primary border-1 ${pressed ? `bg-${color}` : ''}`
+      tx = `text-${color}${pressed ? ':contrast' : ''}`
+      break
+    case 'tonal':
+      bg = `bg-${color}${pressed ? '' : ':tonal'}`
+      tx = `text-${color}${pressed ? ':contrast' : ''}`
+      break
+  }
 
   return (
     <Pressable
       style={sty`
         row align-items-center justify-content-center gap-2
-        bg-${color}${pressed && ':highlight'}
+        ${bg}
         ${btnSizes[size]} ${{ borderRadius: btnRadius }}
         ${disabled && { opacity: 0.65 }}
         ${btnSty}
@@ -70,12 +86,11 @@ const Btn = ({
       {isValidElement(children)
         ? children
         : (
-            <Text sty={sty`text-${color}:contrast fw-bold ${textSty}`}>
+            <Text sty={sty`${tx} fw-bold ${textSty}`}>
               {children}
             </Text>
           )}
     </Pressable>
   )
 }
-
 export default Btn

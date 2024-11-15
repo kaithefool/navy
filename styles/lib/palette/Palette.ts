@@ -21,13 +21,14 @@ export class Palette {
   components: ComponentColors
 
   highlights: Colors
+  tonals: Colors
   contrasts: Colors
-  // tones: Colors
 
   constructor({
     themes, grays, components = {},
     invert = false,
     highlight = 0.2,
+    tonal = 0.75,
   }: {
     themes: {
       primary: string | { color: string } & VariantsOpts
@@ -38,6 +39,7 @@ export class Palette {
     invert?: boolean
 
     highlight?: number
+    tonal?: number
     contrastRatio?: number
   }) {
     this.themes = Object.assign({},
@@ -65,7 +67,12 @@ export class Palette {
     }
     this.highlights = Object.fromEntries(
       Object.entries(this.colors).map(([k, v]) => (
-        [k, chroma(v)[!invert ? 'darken' : 'brighten'](highlight).hex()]
+        [k, chroma(v).mix(!invert ? 'black' : 'white', highlight).hex()]
+      )),
+    )
+    this.tonals = Object.fromEntries(
+      Object.entries(this.colors).map(([k, v]) => (
+        [k, chroma(v).mix(!invert ? 'white' : 'black', tonal).hex()]
       )),
     )
     this.contrasts = Object.fromEntries(

@@ -35,7 +35,7 @@ const FormLogin = ({
       />
       <Text sty="fw-bold mb-1 fs-sm">Password</Text>
       <Form.InputText name="password" sty="mb-2" secureTextEntry />
-      <Form.BtnSubmit color="primary">Login</Form.BtnSubmit>
+      <Form.BtnSubmit variant="tonal" color="primary">Login</Form.BtnSubmit>
     </Form>
   )
 }

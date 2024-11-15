@@ -20,6 +20,7 @@ export default function makeTypographyStyles({
 
     ...mapStyles(palette.colors, v => ({ color: v }), 'text'),
     ...mapStyles(palette.highlights, v => ({ color: v }), 'text', 'highlight'),
+    ...mapStyles(palette.tonals, v => ({ color: v }), 'text', 'tonal'),
     ...mapStyles(palette.contrasts, v => ({ color: v }), 'text', 'contrast'),
     ...mapStyles(fontFamilies, v => ({ fontFamily: v }), 'font'),
     ...mapStyles(fontWeights, v => ({ fontWeight: v }), 'fw'),

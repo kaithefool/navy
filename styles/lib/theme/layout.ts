@@ -17,6 +17,7 @@ export default function makeLayoutStyles({
   return {
     ...mapStyles(palette.colors, v => ({ backgroundColor: v }), 'bg'),
     ...mapStyles(palette.highlights, v => ({ backgroundColor: v }), 'bg', 'highlight'),
+    ...mapStyles(palette.tonals, v => ({ backgroundColor: v }), 'bg', 'tonal'),
     ...mapStyles(palette.contrasts, v => ({ backgroundColor: v }), 'bg', 'contrast'),
 
     ...mapStyles(palette.colors, v => ({ borderColor: v }), 'border'),
