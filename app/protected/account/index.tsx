@@ -7,7 +7,7 @@ import { faPowerOff } from '@fortawesome/free-solid-svg-icons/faPowerOff'
 const AccountHome = () => {
   return (
     <View sty="p-3">
-      <Group sty="rounded-3 border-1 border-primary">
+      <Group sty="rounded-3 border-1 border-gray-300">
         <Group.Btn icon={faShieldHalved}>
           Password
         </Group.Btn>

@@ -9,6 +9,7 @@ import {
 
 import Styles from '@/styles'
 import Config from '@/components/lib/context/config'
+import { View } from '@/components/lib/base'
 
 // Prevents SplashScreen from auto hiding while the fonts are loaded.
 SplashScreen.preventAutoHideAsync()
@@ -32,7 +33,9 @@ export default function RootLayout() {
   return (
     <Config>
       <Styles>
-        <Slot />
+        <View sty="bg-body fill">
+          <Slot />
+        </View>
       </Styles>
     </Config>
   )
