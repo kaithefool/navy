@@ -8,7 +8,7 @@ import GroupBtn from './GroupBtn'
 const Group = ({
   children,
   sty: style,
-  dividerSty,
+  dividerSty = 'bg-gray-200',
 }: {
   children?: ReactNode
   sty?: Sty
@@ -16,13 +16,15 @@ const Group = ({
 }) => {
   const { sty } = useStyles()
   const s = sty(style)
+  const { flexDirection: dir = 'column' } = s
   const a = isIterable<ReactNode>(children) && typeof children !== 'string'
     ? Array.from(children)
     : [children]
+
   const c = a.flatMap((e, i) => {
     const re = [
       <GroupItem
-        key={`item-${i}`}
+        key={`gp-item-${i}`}
         index={i}
         length={a.length}
         parentStyle={s}
@@ -32,10 +34,17 @@ const Group = ({
     ]
 
     if (i) {
+      // divider
       re.unshift(
         <View
-          key={`divider-${i}`}
-          sty={`border-top-1 border-gray-200 ${dividerSty}`}
+          key={`gp-divider-${i}`}
+          sty={sty`
+            ${/^column/.test(dir)
+                ? { height: 1 }
+                : { width: 1 }
+            }
+            ${dividerSty}
+          `}
         />,
       )
     }

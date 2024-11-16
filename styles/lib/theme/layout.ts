@@ -52,9 +52,9 @@ export default function makeLayoutStyles({
     ...mapStyles(spWiAuto, v => ({ marginHorizontal: v }), 'mx'),
     ...mapStyles(spWiAuto, v => ({ marginVertical: v }), 'my'),
 
-    ...mapStyles(sp, v => ({ gap: v }), 'gap'),
-    ...mapStyles(sp, v => ({ rowGap: v }), 'row-gap'),
-    ...mapStyles(sp, v => ({ columnGap: v }), 'col-gap'),
+    ...mapStyles(sp, v => ({ gap: v }), 'g'),
+    ...mapStyles(sp, v => ({ rowGap: v }), 'gx'),
+    ...mapStyles(sp, v => ({ columnGap: v }), 'gy'),
     ...mapStyles([0, 1, 2, 3, 4, 5], v => ({ flexGrow: v }), 'grow'),
     ...mapStyles([0, 1, 2, 3, 4, 5], v => ({ flexShrink: v }), 'shrink'),
     ...mapStyles(

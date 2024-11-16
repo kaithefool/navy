@@ -9,7 +9,7 @@ const FA = ({
   sty: style,
   ...props
 }: {
-  sty: Sty | Sty[]
+  sty?: Sty | Sty[]
 } & FontAwesomeProps) => {
   const { sty } = useStyles()
   const s = sty(style)

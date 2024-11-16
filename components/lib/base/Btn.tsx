@@ -56,7 +56,7 @@ const Btn = ({
   return (
     <Pressable
       style={sty`
-        row align-items-center justify-content-center gap-2
+        row g-2 align-items-center justify-content-center
         ${bg}
         ${btnSizes[size]} ${{ borderRadius: btnRadius }}
         ${disabled && { opacity: 0.65 }}
@@ -86,7 +86,7 @@ const Btn = ({
       {isValidElement(children)
         ? children
         : (
-            <Text sty={sty`${tx} fw-bold ${textSty}`}>
+            <Text sty={sty`${tx} ${textSty}`}>
               {children}
             </Text>
           )}
