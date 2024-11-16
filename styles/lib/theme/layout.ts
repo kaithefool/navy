@@ -52,6 +52,8 @@ export default function makeLayoutStyles({
     ...mapStyles(spWiAuto, v => ({ marginHorizontal: v }), 'mx'),
     ...mapStyles(spWiAuto, v => ({ marginVertical: v }), 'my'),
 
+    ...mapStyles(['absolute', 'relative', 'static'] as const, v => ({ position: v }), 'pos'),
+
     ...mapStyles(sp, v => ({ gap: v }), 'g'),
     ...mapStyles(sp, v => ({ rowGap: v }), 'gx'),
     ...mapStyles(sp, v => ({ columnGap: v }), 'gy'),

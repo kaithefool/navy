@@ -68,8 +68,6 @@ const mergeQueries = (
   )
 }
 
-mergeQueries('https://localhost:3000', { u: 'admin' })
-
 const mergeHeaders = (...hArgs: (HeadersInit | undefined)[]): Headers => {
   const hs = hArgs.map((h) => {
     if (!h) return {}

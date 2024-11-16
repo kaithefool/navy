@@ -3,7 +3,7 @@ import { Group, View } from '@/components/lib/base'
 import { faShieldHalved } from '@fortawesome/free-solid-svg-icons/faShieldHalved'
 import { faUser } from '@fortawesome/free-regular-svg-icons/faUser'
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons/faPowerOff'
-import { useAuth } from '@/components/lib/context/config'
+import { useAuth } from '@/components/lib/config'
 
 const AccountHome = () => {
   const { logout } = useAuth()

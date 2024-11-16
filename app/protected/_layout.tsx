@@ -4,7 +4,7 @@ import React from 'react'
 import FA from '@/components/lib/base/FA'
 import { faHome } from '@fortawesome/free-solid-svg-icons/faHome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '@/components/lib/context/config'
+import { useAuth } from '@/components/lib/config'
 
 const ProtectedLayout = () => {
   useAuth(true)

@@ -8,8 +8,9 @@ import {
 } from '@expo-google-fonts/noto-sans'
 
 import Styles from '@/styles'
-import Config from '@/components/lib/context/config'
+import Config from '@/components/lib/config'
 import { View } from '@/components/lib/base'
+import Alerts from '@/components/lib/alerts'
 
 // Prevents SplashScreen from auto hiding while the fonts are loaded.
 SplashScreen.preventAutoHideAsync()
@@ -34,7 +35,9 @@ export default function RootLayout() {
     <Config>
       <Styles>
         <View sty="bg-body fill">
-          <Slot />
+          <Alerts>
+            <Slot />
+          </Alerts>
         </View>
       </Styles>
     </Config>

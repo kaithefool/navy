@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text } from '../lib/base'
 import Form from '../lib/form'
-import { useAuth } from '../lib/context/config'
+import { useAuth } from '../lib/config'
 import { HttpResponse } from '../lib/hooks/useHttp'
 
 const FormLogin = ({
@@ -21,8 +21,10 @@ const FormLogin = ({
         password: '123$5^7*(0',
       }}
       onSubmitted={(res) => {
-        login(res.payload)
-        onLoggedIn(res.payload)
+        if (res.status === 'success') {
+          login(res.payload)
+          onLoggedIn(res.payload)
+        }
       }}
     >
       <Text sty="fw-bold mb-1 fs-sm">Email</Text>

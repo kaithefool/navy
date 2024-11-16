@@ -7,7 +7,8 @@ import http, {
   HttpSuccessState,
 } from './http'
 import useComparable from '../useComparable'
-import { useConfig } from '../../context/config'
+import { useConfig } from '../../config'
+import { useHttpAlerts } from '../../alerts'
 
 export default function useHttp(request?: HttpRequest) {
   const { api } = useConfig()
@@ -19,8 +20,6 @@ export default function useHttp(request?: HttpRequest) {
   const fetched = useRef<HttpSuccessState>()
   const res = useRef<HttpResponse>()
   const req = async (rq: HttpRequest) => {
-    console.log(api)
-
     const p = http({
       ...rq,
       url: typeof rq.url === 'string'
@@ -39,6 +38,9 @@ export default function useHttp(request?: HttpRequest) {
 
     return rs
   }
+
+  // alerts
+  useHttpAlerts(state)
 
   useEffect(() => {
     // shortcut to call req in init
