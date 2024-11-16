@@ -4,17 +4,19 @@ export type Auth = {
   access: string
   refresh: string
   user: {
-    lng: string
+    lng?: string
+    role?: string
   }
-}
+} | null
 
 export type ConfigContextType = {
   api: string
-  auth?: Auth
+  auth: Auth
   setAuth: (auth: Auth) => void
 }
 
 export default createContext<ConfigContextType>({
   api: '',
-  setAuth: () => {},
+  auth: null,
+  setAuth: () => null,
 })

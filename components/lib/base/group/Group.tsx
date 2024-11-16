@@ -15,19 +15,19 @@ const Group = ({
   dividerSty?: Sty
 }) => {
   const { sty } = useStyles()
-  const s = sty(style)
-  const { flexDirection: dir = 'column' } = s
-  const a = isIterable<ReactNode>(children) && typeof children !== 'string'
+  const parentStyle = sty(style)
+  const { flexDirection: dir = 'column' } = parentStyle
+  let toRender = isIterable<ReactNode>(children) && typeof children !== 'string'
     ? Array.from(children)
     : [children]
 
-  const c = a.flatMap((e, i) => {
+  toRender = toRender.flatMap((e, i) => {
     const re = [
       <GroupItem
         key={`gp-item-${i}`}
         index={i}
-        length={a.length}
-        parentStyle={s}
+        length={toRender.length}
+        parentStyle={parentStyle}
       >
         {e}
       </GroupItem>,
@@ -53,8 +53,8 @@ const Group = ({
   })
 
   return (
-    <View sty={s}>
-      {c}
+    <View sty={parentStyle}>
+      {toRender}
     </View>
   )
 }

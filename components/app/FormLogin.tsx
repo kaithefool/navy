@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text } from '../lib/base'
 import Form from '../lib/form'
-import { useConfig } from '../lib/context/config'
+import { useAuth } from '../lib/context/config'
 import { HttpResponse } from '../lib/hooks/useHttp'
 
 const FormLogin = ({
@@ -9,7 +9,7 @@ const FormLogin = ({
 }: {
   onLoggedIn?: (payload: HttpResponse['payload']) => void
 }) => {
-  const { setAuth } = useConfig()
+  const { login } = useAuth()
 
   return (
     <Form
@@ -21,7 +21,7 @@ const FormLogin = ({
         password: '123$5^7*(0',
       }}
       onSubmitted={(res) => {
-        setAuth(res.payload)
+        login(res.payload)
         onLoggedIn(res.payload)
       }}
     >

@@ -2,14 +2,14 @@ import React from 'react'
 
 import { Centered } from '@/components/lib/base'
 import FormLogin from '@/components/app/FormLogin'
-import { router } from 'expo-router'
+import { useAuth } from '@/components/lib/context/config'
 
 export default function Home() {
+  useAuth({ role: 'guest' })
+
   return (
     <Centered sty="p-3">
-      <FormLogin
-        onLoggedIn={() => router.navigate('/protected')}
-      />
+      <FormLogin />
     </Centered>
   )
 }
