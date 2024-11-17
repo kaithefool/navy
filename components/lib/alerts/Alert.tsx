@@ -2,7 +2,7 @@ import React from 'react'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import useAlerts from './useAlerts'
 import { AlertMsg } from './AlertsContext'
-import { Btn, View } from '../base'
+import { Btn, Text, View } from '../base'
 import FA from '../base/FA'
 
 const Alert = ({
@@ -15,15 +15,18 @@ const Alert = ({
 
   return (
     <View sty={`
-      row g-2 align-items-center px-2 py-1
-      bg-{theme}:tonal
+      w-100 row g-2 px-2 py-1
+      align-items-center
+      bg-${theme}:tonal
       rounded-3
     `}
     >
       {icon && (
         <FA icon={icon} sty={`text-${theme}-500`} />
       )}
-      {body}
+      <Text sty={`grow-1 text-${theme}-500`}>
+        {body}
+      </Text>
       <Btn
         icon={faTimes}
         size="sm"

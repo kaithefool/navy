@@ -4,7 +4,9 @@ import { Sty, useStyles } from '../../../styles'
 
 const Text = ({
   sty: styles, ...props
-}: { sty?: Sty | Sty[] } & TextProps) => {
+}: {
+  sty?: Sty | Sty[]
+} & TextProps) => {
   const { sty } = useStyles()
 
   return (

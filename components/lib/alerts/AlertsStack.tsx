@@ -7,7 +7,7 @@ import Alert from './Alert'
 const AlertsStack = ({
   sty: style,
 }: {
-  sty: Sty | Sty[]
+  sty?: Sty | Sty[]
 }) => {
   const { sty } = useStyles()
   const { stack } = useAlerts()

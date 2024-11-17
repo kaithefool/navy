@@ -1,7 +1,6 @@
-import React, { ReactNode, useId, useState } from 'react'
+import React, { ReactNode, useState } from 'react'
+import { nanoid } from 'nanoid/non-secure'
 import AlertsContext, { AlertsContextType } from './AlertsContext'
-import AlertsStack from './AlertsStack'
-import Alert from './Alert'
 
 const AlertsProvider = ({
   children,
@@ -17,7 +16,7 @@ const AlertsProvider = ({
     push: (msg) => {
       setStack([
         ...stack,
-        { ...msg, id: useId() },
+        { ...msg, id: nanoid() },
       ].slice(-limit))
     },
     purge: () => {
@@ -34,8 +33,5 @@ const AlertsProvider = ({
     </AlertsContext.Provider>
   )
 }
-
-AlertsProvider.Stack = AlertsStack
-AlertsProvider.Alert = Alert
 
 export default AlertsProvider

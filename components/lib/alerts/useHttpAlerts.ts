@@ -9,6 +9,8 @@ export default function useHttpAlerts(
 ) {
   const { push } = useAlerts()
 
+  console.log(state)
+
   useEffect(() => {
     if (state.status === 'success') {
       push({
