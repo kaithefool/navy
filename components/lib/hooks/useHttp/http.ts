@@ -3,6 +3,10 @@ import HttpError from './HttpError'
 
 type ResponseTypes = 'arrayBuffer' | 'blob' | 'json' | 'text' | 'formData'
 
+export type HttpUnstartedState = {
+  status: 'unstarted'
+}
+
 export type HttpPendingState = {
   status: 'pending'
   raw?: Response
@@ -37,7 +41,7 @@ export type HttpRequest = RequestInit & {
   onProgress?: (res: HttpPendingState) => void
 }
 
-export type HttpState = HttpPendingState | HttpErrorState | HttpSuccessState
+export type HttpState = HttpUnstartedState | HttpPendingState | HttpErrorState | HttpSuccessState
 
 export type HttpResponse = HttpErrorState | HttpSuccessState
 

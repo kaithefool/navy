@@ -13,13 +13,16 @@ import { useHttpAlerts } from '../../alerts'
 export default function useHttp(request?: HttpRequest) {
   const { api } = useConfig()
   const [state, setState] = useState<HttpState>({
-    status: 'pending',
-    progress: 0,
+    status: 'unstarted',
   })
   const promise = useRef<HttpPromise>()
   const fetched = useRef<HttpSuccessState>()
   const res = useRef<HttpResponse>()
   const req = async (rq: HttpRequest) => {
+    setState({
+      status: 'pending',
+      progress: 0,
+    })
     const p = http({
       ...rq,
       url: typeof rq.url === 'string'
