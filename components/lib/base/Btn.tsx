@@ -25,7 +25,7 @@ const Btn = ({
   textSty?: Sty | Sty[]
   disabled?: boolean
   color?: string
-  variant?: 'filled' | 'tonal' | 'outline'
+  variant?: 'filled' | 'tonal' | 'outline' | 'link'
   icon?: IconDefinition
   size?: keyof Theme.ThemeConfig['btnSizes']
 
@@ -39,6 +39,10 @@ const Btn = ({
   let bg = '', tx = ''
 
   switch (variant) {
+    case 'link':
+      bg = ''
+      tx = `text-${color}`
+      break
     case 'filled':
       bg = `bg-${color}${pressed ? ':highlight' : ''}`
       tx = `text-${color}:contrast`
@@ -80,16 +84,18 @@ const Btn = ({
       {icon && (
         <FA
           icon={icon}
-          sty={`text-${color}:contrast`}
+          sty={tx}
         />
       )}
-      {isValidElement(children)
-        ? children
-        : (
-            <Text sty={sty`${tx} ${textSty}`}>
-              {children}
-            </Text>
-          )}
+      {children && (
+        isValidElement(children)
+          ? children
+          : (
+              <Text sty={sty`${tx} ${textSty}`}>
+                {children}
+              </Text>
+            )
+      )}
     </Pressable>
   )
 }

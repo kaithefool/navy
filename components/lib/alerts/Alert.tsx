@@ -30,6 +30,9 @@ const Alert = ({
       <Btn
         icon={faTimes}
         size="sm"
+        color={`${theme}-500`}
+        variant="link"
+        sty="px-0"
         onPress={() => remove(id)}
       />
     </View>

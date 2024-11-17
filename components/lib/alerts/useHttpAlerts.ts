@@ -9,8 +9,6 @@ export default function useHttpAlerts(
 ) {
   const { push } = useAlerts()
 
-  console.log(state)
-
   useEffect(() => {
     if (state.status === 'success') {
       push({
@@ -23,7 +21,7 @@ export default function useHttpAlerts(
       push({
         icon: faFaceFrown,
         theme: 'danger',
-        body: 'Errrrr',
+        body: state.error.type,
       })
     }
   }, [state.status])
