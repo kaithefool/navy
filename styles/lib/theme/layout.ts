@@ -59,6 +59,7 @@ export default function makeLayoutStyles({
     ...mapStyles(sp, v => ({ columnGap: v }), 'gy'),
     ...mapStyles([0, 1, 2, 3, 4, 5], v => ({ flexGrow: v }), 'grow'),
     ...mapStyles([0, 1, 2, 3, 4, 5], v => ({ flexShrink: v }), 'shrink'),
+    ...mapStyles(dimensions, v => ({ flexBasis: v }), 'basis'),
     ...mapStyles(
       ['wrap', 'nowrap', 'wrap-reverse'] as const,
       v => ({ flexWrap: v }),

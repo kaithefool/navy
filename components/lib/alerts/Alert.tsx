@@ -24,7 +24,7 @@ const Alert = ({
       {icon && (
         <FA icon={icon} sty={`text-${theme}-500`} />
       )}
-      <Text sty={`grow-1 text-${theme}-500`}>
+      <Text sty={`grow-1 basis-0 text-${theme}-500`}>
         {body}
       </Text>
       <Btn

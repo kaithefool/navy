@@ -99,7 +99,7 @@ export default class Theme {
       spacer: opts.spacer ?? 24,
       dimensions: opts.dimensions ?? {
         auto: 'auto',
-        0: '0%',
+        0: 0,
         25: '25%',
         50: '50%',
         75: '75%',
