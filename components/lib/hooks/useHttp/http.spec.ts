@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals'
-import { HttpPromise, mergeHeaders, mergeQueries } from './http'
+import { mergeHeaders, mergeQueries } from './http'
 import qs from 'qs'
 
 const url = new URL('http://example.com')
@@ -35,22 +35,4 @@ describe('mergeHeaders', () => {
     expect(headers.get('Accept-Language')).toBe('en')
     expect(headers.get('Content-Length')).toBe('300')
   })
-})
-
-describe('HttpPromise', () => {
-  it('implements Promise that resolves into Response', async () => {
-    await expect(new HttpPromise({
-      url: 'http://localhost:3000',
-      responseType: 'text',
-    }))
-      .resolves.toMatchObject({ status: 'success' })
-    // await expect(new HttpPromise({ url: 'http://localhost:9999'}))
-    //   .rejects.toThrow()
-  })
-  // it('can be canceled', async () => {
-  //   const p = new HttpPromise('http://localhost:3000')
-
-  //   p.abort()
-  //   await expect(p).rejects.toThrow()
-  // })
 })
