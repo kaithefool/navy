@@ -21,7 +21,7 @@ export default function useHttpAlerts(
       push({
         icon: faFaceFrown,
         theme: 'danger',
-        body: state.error.type,
+        body: [state.error.type, state.payload?.message].filter(v => v).join(':'),
       })
     }
   }, [state.status])

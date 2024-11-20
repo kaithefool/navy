@@ -45,20 +45,7 @@ export type HttpState = HttpUnstartedState | HttpPendingState | HttpErrorState |
 
 export type HttpResponse = HttpErrorState | HttpSuccessState
 
-export class HttpPromise extends Promise<HttpResponse> {
-  constructor(
-    requestFn: () => Promise<HttpResponse>,
-    private readonly abortController: AbortController,
-  ) {
-    super(resolve => resolve(requestFn()))
-  }
-
-  abort() {
-    this.abortController.abort()
-  }
-}
-
-const mergeQueries = (
+export const mergeQueries = (
   url: string | URL,
   query: object = {},
 ): URL => {
@@ -72,7 +59,7 @@ const mergeQueries = (
   )
 }
 
-const mergeHeaders = (...hArgs: (HeadersInit | undefined)[]): Headers => {
+export const mergeHeaders = (...hArgs: (HeadersInit | undefined)[]): Headers => {
   const hs = hArgs.map((h) => {
     if (!h) return {}
     if (h instanceof Headers) {
@@ -94,54 +81,75 @@ const mergeHeaders = (...hArgs: (HeadersInit | undefined)[]): Headers => {
   return new Headers(Object.assign({}, ...hs))
 }
 
-export default function http({
+export async function fetchAndParse({
   url,
   query,
   headers,
   requestType = 'json',
   responseType = 'json',
   ...rest
-}: HttpRequest): HttpPromise {
-  const abortCtrl = new AbortController()
+}: HttpRequest, abortController: AbortController) {
+  let res: Response | undefined
+  let payload: HttpResponse['payload']
 
-  return new HttpPromise(async () => {
-    let res: Response | undefined
-    let payload: HttpResponse['payload']
+  try {
+    res = await fetch(mergeQueries(url, query), {
+      ...rest,
+      headers: mergeHeaders(
+        { 'content-type': contentTypes[requestType] },
+        headers,
+      ),
+      signal: abortController.signal,
+    })
 
-    try {
-      res = await fetch(mergeQueries(url, query), {
-        ...rest,
-        headers: mergeHeaders(
-          { 'content-type': contentTypes[requestType] },
-          headers,
-        ),
-        signal: abortCtrl.signal,
-      })
+    payload = await res[responseType]()
 
-      payload = await res[responseType]()
+    // if status code isn't within the 2xx range
+    if (!res.ok) throw res
 
-      // if status code isn't within the 2xx range
-      if (!res.ok) throw res
-
-      const r: HttpSuccessState = {
-        status: 'success',
-        raw: res,
-        payload,
-        progress: 1,
-      }
-
-      return r
+    const r: HttpSuccessState = {
+      status: 'success',
+      raw: res,
+      payload,
+      progress: 1,
     }
-    catch (e) {
-      const r: HttpErrorState = {
-        status: 'error',
-        raw: res,
-        error: new HttpError(e),
-        payload,
-        progress: 0,
-      }
 
-      return r
+    return r
+  }
+  catch (e) {
+    const r: HttpErrorState = {
+      status: 'error',
+      raw: res,
+      error: new HttpError(e),
+      payload,
+      progress: 0,
     }
-  }, abortCtrl)
+
+    return r
+  }
+}
+
+export class HttpPromise extends Promise<HttpResponse> {
+  private readonly abortController?: AbortController
+
+  constructor(input: HttpRequest) {
+    if (typeof input === 'function') {
+      super(input)
+    }
+    else {
+      const abortController = new AbortController()
+      super(resolve => resolve(
+        fetchAndParse(input, abortController),
+      ))
+      this.abortController = abortController
+    }
+  }
+
+  abort() {
+    this.abortController?.abort()
+  }
+}
+
+export default function http(req: HttpRequest) {
+  return new HttpPromise(req)
 }

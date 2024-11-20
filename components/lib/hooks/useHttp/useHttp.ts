@@ -19,27 +19,26 @@ export default function useHttp(request?: HttpRequest) {
   const fetched = useRef<HttpSuccessState>()
   const res = useRef<HttpResponse>()
   const req = async (rq: HttpRequest) => {
+    promise.current?.abort()
+
     setState({
       status: 'pending',
       progress: 0,
     })
-    const p = http({
+    promise.current = http({
       ...rq,
       url: typeof rq.url === 'string'
         && !/^(?:(ht|f)tp(s?)\:\/\/)/.test(rq.url)
         ? `${api}${rq.url}`
         : rq.url,
     })
-    promise.current = p
-    const rs = await p
-
-    if (rs.status === 'success') {
-      fetched.current = rs
+    res.current = await promise.current
+    setState(res.current)
+    if (res.current.status === 'success') {
+      fetched.current = res.current
     }
-    res.current = rs
-    setState(rs)
 
-    return rs
+    return res.current
   }
 
   // alerts
