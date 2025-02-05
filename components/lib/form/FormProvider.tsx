@@ -3,6 +3,7 @@ import { Formik, FormikConfig, FormikProps, FormikValues } from 'formik'
 import { Schema } from 'yup'
 import FormContext, { FormContextType } from './FormContext'
 import useHttp, { HttpRequest, HttpResponse } from '../hooks/useHttp'
+import { castToFormikDefaults } from './helpers'
 
 const FormProvider = <V extends FormikValues>({
   children,
@@ -23,7 +24,7 @@ const FormProvider = <V extends FormikValues>({
   schema?: Schema
   disabled?: boolean
   defaults: V
-  stored?: Partial<V>
+  stored?: object
   onSubmit?: FormikConfig<V>['onSubmit']
   onSubmitted?: (res: HttpResponse) => void
   api?: HttpRequest | ((values: V) => HttpRequest)
@@ -38,7 +39,7 @@ const FormProvider = <V extends FormikValues>({
   return (
     <Formik
       validationSchema={schema}
-      initialValues={defaults}
+      initialValues={castToFormikDefaults<V>(defaults, stored)}
       onSubmit={onSubmit ?? (async (values, { resetForm }) => {
         if (api) {
           const res = await http.req(
