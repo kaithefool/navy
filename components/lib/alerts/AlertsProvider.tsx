@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react'
-import { nanoid } from 'nanoid/non-secure'
 import AlertsContext, { AlertsContextType } from './AlertsContext'
+import uniqueId from 'lodash/uniqueId'
 
 const AlertsProvider = ({
   children,
@@ -16,7 +16,7 @@ const AlertsProvider = ({
     push: (msg) => {
       setStack([
         ...stack,
-        { ...msg, id: nanoid() },
+        { ...msg, id: uniqueId() },
       ].slice(-limit))
     },
     purge: () => {
